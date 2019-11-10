@@ -35,7 +35,7 @@
                 </td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
+                <td>KURWA DZIAŁA NAM GIT</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>

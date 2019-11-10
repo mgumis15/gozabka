@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>wdawdwaddawdawd</td>
-                <td>&nbsp;</td>
+                <td>KURWAAAA TO MA DZIALAC</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>

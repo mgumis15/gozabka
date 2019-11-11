@@ -16,6 +16,9 @@
         .auto-style3 {
             height: 30px;
         }
+        .auto-style4 {
+            height: 26px;
+        }
     </style>
 </head>
 <body>
@@ -28,10 +31,10 @@
                 <td class="auto-style3"></td>
                 <td class="auto-style3"></td>
                 <td class="auto-style3">
-                    <asp:Button ID="bLogin" runat="server" Text="Logowanie" OnClick="bLogin_Click" />
+                    <asp:Button ID="bLogin" runat="server" Text="Logowanie" OnClick="bLogin_Click" CausesValidation="False" />
                 </td>
                 <td class="auto-style3">
-                    <asp:Button ID="bRegister" runat="server" Text="Rejestracja" OnClick="bRegister_Click" />
+                    <asp:Button ID="bRegister" runat="server" Text="Rejestracja" OnClick="bRegister_Click" CausesValidation="False" />
                 </td>
             </tr>
             <tr>
@@ -62,19 +65,21 @@
                 </td>
                 <td>
                     <asp:TextBox ID="tbName" runat="server" Visible="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="tbName" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>
+                <td class="auto-style4"></td>
+                <td class="auto-style4"></td>
+                <td class="auto-style4"></td>
+                <td class="auto-style4"></td>
+                <td class="auto-style4"></td>
+                <td class="auto-style4">
                     <asp:Label ID="lPassword" runat="server" Text="Hasło" Visible="False"></asp:Label>
                 </td>
-                <td>
+                <td class="auto-style4">
                     <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True"  TextMode="Password" Visible="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="tbPassword" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -87,7 +92,9 @@
                     <asp:Label ID="lRepPass" runat="server" Text="Powtórz hasło" Visible="False"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbRepPass" runat="server" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="tbRepPass" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvRepPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="cvPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="Hasła nie są identyczne" ForeColor="Red" OnServerValidate="cvPass_ServerValidate">*</asp:CustomValidator>
                 </td>
             </tr>
             <tr>
@@ -101,6 +108,8 @@
                 </td>
                 <td>
                     <asp:TextBox ID="tbMail" runat="server" Visible="False" ></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="rfvMail" runat="server" ControlToValidate="tbMail" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="tbMail" ErrorMessage="To nie jest prawidłowy adres email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
                 </td>
             </tr>
             <tr>
@@ -115,6 +124,7 @@
                 </td>
             </tr>
         </table>
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
     </form>
 </body>
 </html>

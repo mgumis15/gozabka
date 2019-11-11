@@ -27,20 +27,7 @@ namespace Sklep
                 LoadSuccessExpression = "window.jQuery"
             });
 
-            MySqlConnection connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
-            connection.Open();
-
-            MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select * from users";
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                Debug.WriteLine(reader["name"].ToString());
-
-                //reader.GetString(0)
-                //reader["column_name"].ToString()
-            }
-            reader.Close();
+            
         }
     }
 }

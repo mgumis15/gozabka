@@ -74,6 +74,7 @@ namespace Sklep
                 {
                     command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '"+tbName.Text+"', '"+tbPassword.Text+"', '"+tbMail.Text+"', '0', 'qwe', 'qwe');";
                     Debug.WriteLine("Coś z hasłem");
+                    Debug.WriteLine("Cośtam");
                     command.ExecuteNonQuery();
                 }
             }

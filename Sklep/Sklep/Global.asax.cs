@@ -6,6 +6,9 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.SessionState;
 using System.Web.UI;
+using MySql.Data.MySqlClient;
+using System.Diagnostics;
+
 
 namespace Sklep
 {
@@ -23,6 +26,21 @@ namespace Sklep
                 CdnSupportsSecureConnection = true,
                 LoadSuccessExpression = "window.jQuery"
             });
+
+            MySqlConnection connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
+            connection.Open();
+
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select * from users";
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Debug.WriteLine(reader["name"].ToString());
+
+                //reader.GetString(0)
+                //reader["column_name"].ToString()
+            }
+            reader.Close();
         }
     }
 }

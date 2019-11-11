@@ -25,7 +25,6 @@ namespace Sklep
             tbPassword.Visible = false;
             tbRepPass.Visible = false;
             tbMail.Visible = false;
-
             bDoLogOrReg.Visible = false;
         }
 

@@ -1,7 +1,11 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,7 +21,7 @@ namespace Sklep
             connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
             connection.Open();
         }
-
+        
         protected void bLogin_Click(object sender, EventArgs e)
         {
             lLogin.Visible = true;
@@ -45,6 +49,9 @@ namespace Sklep
             tbMail.Visible = true;
             bDoLogOrReg.Visible = true;
             bDoLogOrReg.Text = "Zarejestruj się";
+
+
+
         }
 
         protected void bDoLogOrReg_Click(object sender, EventArgs e)
@@ -52,6 +59,11 @@ namespace Sklep
             if (Page.IsValid)
             {
                 
+
+
+                
+                
+
 
                 MySqlCommand command = connection.CreateCommand();
                 command.CommandText = "select * from users";
@@ -72,9 +84,41 @@ namespace Sklep
                 reader.Close();
                 if (check1)
                 {
-                    command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '"+tbName.Text+"', '"+tbPassword.Text+"', '"+tbMail.Text+"', '0', 'qwe', 'qwe');";
+
+                    //wysylanie maila
+                    SmtpClient client;
+                    MailMessage message;
+                    
+                    Random generator = new Random();
+                    int AuthCode = generator.Next(0, 99999);
+
+                    try
+                    {
+                        message = new MailMessage("Alterowani.Shop@gmail.com", tbMail.Text);
+                        message.Subject = "Rejestracja użytkowanika Alterowani Shop";
+                        message.Body = "Witaj " + tbName.Text + ". Twój kod weryfikacyjny to: " + AuthCode + ". Dziękujemy za wybór naszego sklepu!";
+
+                        client = new SmtpClient("smtp.gmail.com", 587);
+                        client.UseDefaultCredentials = false;
+                        client.EnableSsl = true;
+                        client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
+
+
+                        client.Send(message);
+                        lName.Text = "Message sent";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        lName.Text = "You can not send messages (" + ex.Message + ")";
+                    }
+
+
+
+                    command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + tbPassword.Text + "', '" + tbMail.Text + "', '0', "+AuthCode+", 'user');";
                     command.ExecuteNonQuery();
                 }
+
             }
         }
 

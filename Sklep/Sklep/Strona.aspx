@@ -61,7 +61,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Label ID="lName" runat="server" Text="Nazwa" Visible="False"></asp:Label>
+                    <asp:Label ID="lName" runat="server" Text="Baobab" Visible="False"></asp:Label>
                 </td>
                 <td>
                     <asp:TextBox ID="tbName" runat="server" Visible="False"></asp:TextBox>
@@ -80,7 +80,7 @@
                 <td class="auto-style4">
                     <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True"  TextMode="Password" Visible="False"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="tbPassword" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków">*</asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$">*</asp:RegularExpressionValidator>
                 </td>
             </tr>
             <tr>

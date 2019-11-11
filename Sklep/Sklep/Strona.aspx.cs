@@ -78,7 +78,7 @@ namespace Sklep
             }
         }
 
-        protected void cvPass_ServerValidate(object source, ServerValidateEventArgs args)
+        protected void cvPassMatch_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (tbPassword.Text != tbRepPass.Text)
             {

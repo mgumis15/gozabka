@@ -80,6 +80,7 @@
                 <td class="auto-style4">
                     <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True"  TextMode="Password" Visible="False"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="tbPassword" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków">*</asp:RegularExpressionValidator>
                 </td>
             </tr>
             <tr>
@@ -94,7 +95,7 @@
                 <td>
                     <asp:TextBox ID="tbRepPass" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvRepPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="cvPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="Hasła nie są identyczne" ForeColor="Red" OnServerValidate="cvPass_ServerValidate">*</asp:CustomValidator>
+                    <asp:CustomValidator ID="cvPassMatch" runat="server" ControlToValidate="tbRepPass" ErrorMessage="Hasła nie są identyczne" ForeColor="Red" OnServerValidate="cvPassMatch_ServerValidate">*</asp:CustomValidator>
                 </td>
             </tr>
             <tr>

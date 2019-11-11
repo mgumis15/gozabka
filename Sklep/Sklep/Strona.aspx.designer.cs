@@ -105,6 +105,15 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPassword;
 
         /// <summary>
+        /// revPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPass;
+
+        /// <summary>
         /// lRepPass control.
         /// </summary>
         /// <remarks>
@@ -132,13 +141,13 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRepPass;
 
         /// <summary>
-        /// cvPass control.
+        /// cvPassMatch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvPass;
+        protected global::System.Web.UI.WebControls.CustomValidator cvPassMatch;
 
         /// <summary>
         /// lMail control.

@@ -31,10 +31,10 @@
                 <td class="auto-style3"></td>
                 <td class="auto-style3"></td>
                 <td class="auto-style3">
-                    <asp:Button ID="bLogin" runat="server" Text="Logowanie" OnClick="bLogin_Click" CausesValidation="False" />
+                    <asp:Button ID="bLogin" runat="server" Text="Logowanie" OnClick="bLogin_Click" CausesValidation="False" UseSubmitBehavior="False" />
                 </td>
                 <td class="auto-style3">
-                    <asp:Button ID="bRegister" runat="server" Text="Rejestracja" OnClick="bRegister_Click" CausesValidation="False" />
+                    <asp:Button ID="bRegister" runat="server" Text="Rejestracja" OnClick="bRegister_Click" CausesValidation="False" UseSubmitBehavior="False" />
                 </td>
             </tr>
             <tr>
@@ -44,7 +44,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Login ID="lLogin" runat="server" BackColor="#EFF3FB" BorderColor="#B5C7DE" BorderPadding="4" BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#333333" Visible="False">
+                    <asp:Login ID="lLogin" runat="server" BackColor="#EFF3FB" BorderColor="#B5C7DE" BorderPadding="4" BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#333333" Visible="False" OnAuthenticate="lLogin_Authenticate" >
                         <InstructionTextStyle Font-Italic="True" ForeColor="Black" />
                         <LoginButtonStyle BackColor="White" BorderColor="#507CD1" BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" />
                         <TextBoxStyle Font-Size="0.8em" />
@@ -64,7 +64,7 @@
                     <asp:Label ID="lName" runat="server" Text="Nazwa" Visible="False"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbName" runat="server" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="tbName" runat="server" Visible="False">wee se drwesr</asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="tbName" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
             </tr>
@@ -78,7 +78,7 @@
                     <asp:Label ID="lPassword" runat="server" Text="Hasło" Visible="False"></asp:Label>
                 </td>
                 <td class="auto-style4">
-                    <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True"  TextMode="Password" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True" Visible="False" TextMode="Password"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="tbPassword" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$">*</asp:RegularExpressionValidator>
                 </td>
@@ -108,7 +108,7 @@
                     <asp:Label ID="lMail" runat="server" Text="E-Mail" Visible="False"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbMail" runat="server" Visible="False" ></asp:TextBox>
+                    <asp:TextBox ID="tbMail" runat="server" Visible="False" >w@w.pl</asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvMail" runat="server" ControlToValidate="tbMail" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="tbMail" ErrorMessage="To nie jest prawidłowy adres email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
                 </td>

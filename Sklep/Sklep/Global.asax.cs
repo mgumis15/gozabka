@@ -27,7 +27,7 @@ namespace Sklep
                 LoadSuccessExpression = "window.jQuery"
             });
 
-            MySqlConnection connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
+            MySqlConnection connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
             connection.Open();
 
             MySqlCommand command = connection.CreateCommand();

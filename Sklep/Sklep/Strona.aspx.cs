@@ -26,9 +26,10 @@ namespace Sklep
             connection.Open();
             command = connection.CreateCommand();
         }
-        
+
         protected void bLogin_Click(object sender, EventArgs e)
         {
+            lInfo.Text = "";
             hdLogRes.Value = "0";
             lName.Visible = true;
             lPassword.Visible = true;
@@ -49,6 +50,7 @@ namespace Sklep
 
         protected void bRegister_Click(object sender, EventArgs e)
         {
+            lInfo.Text = "";
             hdLogRes.Value = "1";
             lMail.Visible = true;
             lName.Visible = true;
@@ -70,14 +72,51 @@ namespace Sklep
         protected void bDoLogOrReg_Click(object sender, EventArgs e)
         {
             //tutaj ją wypisuję i używam
+            var authCheck = 0;
+            if (tbAuth.Visible)
+            {
+                tbName.Enabled = false;
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "select * from users where name='" + tbName.Text + "'";
+                MySqlDataReader reader2 = command.ExecuteReader();
+                while (reader2.Read())
 
-            if (hdLogRes.Value=="1")
                 {
-                Debug.WriteLine("wszedłem do rejestrowania");
+                    Debug.WriteLine(reader2["authorizationCode"]);
+                    if (tbAuth.Text == reader2["authorizationCode"].ToString())
+                    {
+                        authCheck = 1;
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj na stronie " + tbName.Text + "')", true);
+                    }
+                    else
+                    {
+
+                        lInfo.Visible = true;
+                        lInfo.Text = "Podano błędny kod autoryzacyjne. Wprowadź kod ponownie";
+                        tbAuth.Text = "";
+                    }
+                }
+                reader2.Close();
+                if (authCheck == 1)
+                {
+                    command.CommandText = "UPDATE `users` SET `authorized` = '1' WHERE `users`.`name` ='" + tbName.Text + "'";
+                    command.ExecuteNonQuery();
+
+                }
+
+
+            }
+            else
+            {
+
+
+                if (hdLogRes.Value == "1")
+                {
+                    Debug.WriteLine("wszedłem do rejestrowania");
                     if (Page.IsValid)
                     {
-                    Debug.WriteLine("rejestrowane zwalidowane");
-                    MySqlCommand command = connection.CreateCommand();
+                        Debug.WriteLine("rejestrowane zwalidowane");
+                        MySqlCommand command = connection.CreateCommand();
                         command.CommandText = "select * from users";
                         MySqlDataReader reader = command.ExecuteReader();
                         Boolean check1 = true;
@@ -103,8 +142,8 @@ namespace Sklep
                 }
                 else
                 {
-                Debug.WriteLine("wszedłem do logowania");
-                command.CommandText = "select * from users";
+                    Debug.WriteLine("wszedłem do logowania");
+                    command.CommandText = "select * from users";
                     MySqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -115,29 +154,41 @@ namespace Sklep
                             string outputVal = Encode(tbPassword.Text, tbName.Text);
                             if (outputVal == reader["password"].ToString())
                             {
-                            Debug.WriteLine(reader["authorized"].ToString());
-                            if (reader["authorized"].ToString() != "0")
+                                Debug.WriteLine("kodzik:");
+                                Debug.WriteLine(reader["authorized"].ToString());
+
+
+                                if (reader["authorized"].ToString() == "True")
                                 {
+
                                     Debug.WriteLine("działa na pewno");
                                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
                                     //e.Authenticated = true;
+
                                 }
                                 else
                                 {
                                     lAuth.Visible = true;
                                     tbAuth.Visible = true;
+                                    tbPassword.Visible = false;
+                                    lPassword.Visible = false;
+                                    rfvPassword.Enabled = false;
+                                    revPass.Enabled = false;
+
                                 }
                             }
                         }
                     }
-                
-             
+                    reader.Close();
 
+
+
+                }
             }
         }
 
         //SZYFROWANIE
-        private string Encode(string pass,string name)
+        private string Encode(string pass, string name)
         {
             List<char> printableChars = new List<char>();
             for (int i = char.MinValue; i <= char.MaxValue; i++)
@@ -198,7 +249,7 @@ namespace Sklep
 
 
                 client.Send(message);
-                lName.Text = "Message sent";
+                lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
 
             }
             catch (Exception ex)
@@ -213,12 +264,13 @@ namespace Sklep
             {
                 args.IsValid = false;
             }
-            else {
+            else
+            {
                 args.IsValid = true;
             }
         }
 
-      
-        
+
+
     }
 }

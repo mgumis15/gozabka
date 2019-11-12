@@ -151,7 +151,9 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td class="auto-style6">&nbsp;</td>
+                <td class="auto-style6">
+                    <asp:Label ID="lInfo" runat="server"></asp:Label>
+                </td>
                 <td class="auto-style9">
                     <asp:Button ID="bDoLogOrReg" runat="server" Text="Zarejestruj się" OnClick="bDoLogOrReg_Click" Visible="False" />
                 </td>

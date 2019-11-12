@@ -140,7 +140,9 @@
                     <asp:RequiredFieldValidator ID="rfvMail" runat="server" ControlToValidate="tbMail" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="tbMail" ErrorMessage="To nie jest prawidłowy adres email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
                 </td>
-                <td>&nbsp;</td>
+                <td>
+                    <asp:HiddenField ID="hdLogRes" runat="server" Value="1" />
+                </td>
                 <td>
                     &nbsp;</td>
                 <td>

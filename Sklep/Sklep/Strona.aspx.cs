@@ -20,7 +20,6 @@ namespace Sklep
         MySqlCommand command;
 
         //Tutaj ją deklaruje
-         Boolean logRes;
         protected void Page_Load(object sender, EventArgs e)
         {
             connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
@@ -30,9 +29,7 @@ namespace Sklep
         
         protected void bLogin_Click(object sender, EventArgs e)
         {
-            //tutaj ją zmieniam
-            logRes = true;
-
+            hdLogRes.Value = "0";
             lName.Visible = true;
             lPassword.Visible = true;
             lRepPass.Visible = false;
@@ -48,14 +45,11 @@ namespace Sklep
             revEmail.Enabled = false;
             rfvMail.Enabled = false;
             cvPassMatch.Enabled = false;
-            Debug.WriteLine(logRes);
         }
 
         protected void bRegister_Click(object sender, EventArgs e)
         {
-            //tutaj ją zmieniam
-            logRes = false;
-
+            hdLogRes.Value = "1";
             lMail.Visible = true;
             lName.Visible = true;
             lPassword.Visible = true;
@@ -66,22 +60,18 @@ namespace Sklep
             tbMail.Visible = true;
             bDoLogOrReg.Visible = true;
             bDoLogOrReg.Text = "Zarejestruj się";
-
             revPass.Enabled = true;
             rfvRepPass.Enabled = true;
             revEmail.Enabled = true;
             rfvMail.Enabled = true;
             cvPassMatch.Enabled = true;
-
-            Debug.WriteLine(logRes);
-
         }
 
         protected void bDoLogOrReg_Click(object sender, EventArgs e)
         {
             //tutaj ją wypisuję i używam
-            Debug.WriteLine(logRes);
-            if (logRes)
+
+            if (hdLogRes.Value=="1")
                 {
                 Debug.WriteLine("wszedłem do rejestrowania");
                     if (Page.IsValid)

@@ -42,13 +42,22 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.Button bRegister;
 
         /// <summary>
-        /// lLogin control.
+        /// lAuth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login lLogin;
+        protected global::System.Web.UI.WebControls.Label lAuth;
+
+        /// <summary>
+        /// tbAuth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAuth;
 
         /// <summary>
         /// lName control.

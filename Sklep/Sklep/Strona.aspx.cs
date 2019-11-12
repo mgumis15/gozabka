@@ -18,6 +18,7 @@ namespace Sklep
     {
         MySqlConnection connection;
         MySqlCommand command;
+        Boolean logRes = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
@@ -27,21 +28,21 @@ namespace Sklep
         
         protected void bLogin_Click(object sender, EventArgs e)
         {
-            lLogin.Visible = true;
-            lName.Visible = false;
-            lPassword.Visible = false;
+            logRes = false;
+            lName.Visible = true;
+            lPassword.Visible = true;
             lRepPass.Visible = false;
             lMail.Visible = false;
-            tbName.Visible = false;
-            tbPassword.Visible = false;
+            tbName.Visible = true;
+            tbPassword.Visible = true;
             tbRepPass.Visible = false;
             tbMail.Visible = false;
-            bDoLogOrReg.Visible = false;
+            bDoLogOrReg.Visible = true;
         }
 
         protected void bRegister_Click(object sender, EventArgs e)
         {
-            lLogin.Visible = false;
+            logRes = true;
             lMail.Visible = true;
             lName.Visible = true;
             lPassword.Visible = true;
@@ -59,60 +60,68 @@ namespace Sklep
 
         protected void bDoLogOrReg_Click(object sender, EventArgs e)
         {
+
             if (Page.IsValid)
             {
-                MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "select * from users";
-                MySqlDataReader reader = command.ExecuteReader();
-                Boolean check1 = true;
-                while (reader.Read())
+                if (logRes)
                 {
-                    if (reader["name"].ToString() == tbName.Text)
+                    MySqlCommand command = connection.CreateCommand();
+                    command.CommandText = "select * from users";
+                    MySqlDataReader reader = command.ExecuteReader();
+                    Boolean check1 = true;
+                    while (reader.Read())
                     {
-                        check1 = false;
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Taki użytkowik już istnieje')", true);
-                        break;
+                        if (reader["name"].ToString() == tbName.Text)
+                        {
+                            check1 = false;
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Taki użytkowik już istnieje')", true);
+                            break;
+                        }
+                    }
+                    reader.Close();
+                    if (check1)
+                    {
+                        //wysylanie maila
+                        int authCode = MailAuthSender(tbMail.Text, tbName.Text);
+                        string outputVal = Encode(tbPassword.Text, tbName.Text);
+                        command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user');";
+                        command.ExecuteNonQuery();
                     }
                 }
-                reader.Close();
-                if (check1)
+                else
                 {
-                    //wysylanie maila
-                    SmtpClient client;
-                    MailMessage message;
-                    
-                    Random generator = new Random();
-                    int AuthCode = generator.Next(0, 99999);
-
-                    try
+                    command.CommandText = "select * from users";
+                    MySqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        message = new MailMessage("Alterowani.Shop@gmail.com", tbMail.Text);
-                        message.Subject = "Rejestracja użytkowanika Alterowani Shop";
-                        message.Body = "Witaj " + tbName.Text + ". Twój kod weryfikacyjny to: " + AuthCode + ". Dziękujemy za wybór naszego sklepu!";
-
-                        client = new SmtpClient("smtp.gmail.com", 587);
-                        client.UseDefaultCredentials = false;
-                        client.EnableSsl = true;
-                        client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
-
-
-                        client.Send(message);
-                        lName.Text = "Message sent";
-
+                        Debug.WriteLine("coś się prawie dzieje");
+                        if (reader["name"].ToString() == tbName.Text)
+                        {
+                            Debug.WriteLine("coś się dzieje");
+                            string outputVal = Encode(tbPassword.Text, tbName.Text);
+                            if (outputVal == reader["password"].ToString())
+                            {
+                                if (reader["authorized"].ToString() != "0")
+                                {
+                                    Debug.WriteLine("działa na pewno");
+                                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
+                                    //e.Authenticated = true;
+                                }
+                                else
+                                {
+                                    lAuth.Visible = true;
+                                    tbAuth.Visible = true;
+                                }
+                            }
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        lName.Text = "You can not send messages (" + ex.Message + ")";
-                    }
-
-
-                    string outputVal = Encode(tbPassword.Text, tbName.Text);
-                    command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', "+AuthCode+", 'user');";
-                    command.ExecuteNonQuery();
                 }
+             
 
             }
         }
+
+        //SZYFROWANIE
         private string Encode(string pass,string name)
         {
             List<char> printableChars = new List<char>();
@@ -152,6 +161,37 @@ namespace Sklep
             }
             return outputVal;
         }
+        //WYSYŁANIE MAILA AUTORYZACYJNEGO
+        private int MailAuthSender(string mail, string name)
+        {
+            SmtpClient client;
+            MailMessage message;
+
+            Random generator = new Random();
+            int authCode = generator.Next(0, 99999);
+
+            try
+            {
+                message = new MailMessage("Alterowani.Shop@gmail.com", mail);
+                message.Subject = "Rejestracja użytkowanika Alterowani Shop";
+                message.Body = "Witaj " + name + ". Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy pierwszym logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu!";
+
+                client = new SmtpClient("smtp.gmail.com", 587);
+                client.UseDefaultCredentials = false;
+                client.EnableSsl = true;
+                client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
+
+
+                client.Send(message);
+                lName.Text = "Message sent";
+
+            }
+            catch (Exception ex)
+            {
+                lName.Text = "You can not send messages (" + ex.Message + ")";
+            }
+            return authCode;
+        }
         protected void cvPassMatch_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (tbPassword.Text != tbRepPass.Text)
@@ -163,24 +203,7 @@ namespace Sklep
             }
         }
 
-        protected void lLogin_Authenticate(object sender, AuthenticateEventArgs e)
-        {
-            command.CommandText = "select * from users";
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                Debug.WriteLine("coś się prawie dzieje");
-                if (reader["name"].ToString() == lLogin.UserName)
-                {
-                    Debug.WriteLine("coś się dzieje");
-                    string outputVal = Encode(lLogin.Password, lLogin.UserName);
-                    if (outputVal == reader["password"].ToString())
-                    {
-                        Debug.WriteLine("działa na pewno");
-                         e.Authenticated = true; 
-                    }
-                }
-            }
-        }
+      
+        
     }
 }

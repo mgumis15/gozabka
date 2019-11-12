@@ -18,7 +18,9 @@ namespace Sklep
     {
         MySqlConnection connection;
         MySqlCommand command;
-        Boolean logRes = false;
+
+        //Tutaj ją deklaruje
+         Boolean logRes;
         protected void Page_Load(object sender, EventArgs e)
         {
             connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
@@ -28,7 +30,9 @@ namespace Sklep
         
         protected void bLogin_Click(object sender, EventArgs e)
         {
-            logRes = false;
+            //tutaj ją zmieniam
+            logRes = true;
+
             lName.Visible = true;
             lPassword.Visible = true;
             lRepPass.Visible = false;
@@ -38,11 +42,20 @@ namespace Sklep
             tbRepPass.Visible = false;
             tbMail.Visible = false;
             bDoLogOrReg.Visible = true;
+            bDoLogOrReg.Text = "Zaloguj się";
+            revPass.Enabled = false;
+            rfvRepPass.Enabled = false;
+            revEmail.Enabled = false;
+            rfvMail.Enabled = false;
+            cvPassMatch.Enabled = false;
+            Debug.WriteLine(logRes);
         }
 
         protected void bRegister_Click(object sender, EventArgs e)
         {
-            logRes = true;
+            //tutaj ją zmieniam
+            logRes = false;
+
             lMail.Visible = true;
             lName.Visible = true;
             lPassword.Visible = true;
@@ -54,43 +67,54 @@ namespace Sklep
             bDoLogOrReg.Visible = true;
             bDoLogOrReg.Text = "Zarejestruj się";
 
+            revPass.Enabled = true;
+            rfvRepPass.Enabled = true;
+            revEmail.Enabled = true;
+            rfvMail.Enabled = true;
+            cvPassMatch.Enabled = true;
 
+            Debug.WriteLine(logRes);
 
         }
 
         protected void bDoLogOrReg_Click(object sender, EventArgs e)
         {
-
-            if (Page.IsValid)
-            {
-                if (logRes)
+            //tutaj ją wypisuję i używam
+            Debug.WriteLine(logRes);
+            if (logRes)
                 {
+                Debug.WriteLine("wszedłem do rejestrowania");
+                    if (Page.IsValid)
+                    {
+                    Debug.WriteLine("rejestrowane zwalidowane");
                     MySqlCommand command = connection.CreateCommand();
-                    command.CommandText = "select * from users";
-                    MySqlDataReader reader = command.ExecuteReader();
-                    Boolean check1 = true;
-                    while (reader.Read())
-                    {
-                        if (reader["name"].ToString() == tbName.Text)
+                        command.CommandText = "select * from users";
+                        MySqlDataReader reader = command.ExecuteReader();
+                        Boolean check1 = true;
+                        while (reader.Read())
                         {
-                            check1 = false;
-                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Taki użytkowik już istnieje')", true);
-                            break;
+                            if (reader["name"].ToString() == tbName.Text)
+                            {
+                                check1 = false;
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Taki użytkowik już istnieje')", true);
+                                break;
+                            }
                         }
-                    }
-                    reader.Close();
-                    if (check1)
-                    {
-                        //wysylanie maila
-                        int authCode = MailAuthSender(tbMail.Text, tbName.Text);
-                        string outputVal = Encode(tbPassword.Text, tbName.Text);
-                        command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user');";
-                        command.ExecuteNonQuery();
+                        reader.Close();
+                        if (check1)
+                        {
+                            //wysylanie maila
+                            int authCode = MailAuthSender(tbMail.Text, tbName.Text);
+                            string outputVal = Encode(tbPassword.Text, tbName.Text);
+                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user');";
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
                 else
                 {
-                    command.CommandText = "select * from users";
+                Debug.WriteLine("wszedłem do logowania");
+                command.CommandText = "select * from users";
                     MySqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -101,7 +125,8 @@ namespace Sklep
                             string outputVal = Encode(tbPassword.Text, tbName.Text);
                             if (outputVal == reader["password"].ToString())
                             {
-                                if (reader["authorized"].ToString() != "0")
+                            Debug.WriteLine(reader["authorized"].ToString());
+                            if (reader["authorized"].ToString() != "0")
                                 {
                                     Debug.WriteLine("działa na pewno");
                                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
@@ -115,7 +140,7 @@ namespace Sklep
                             }
                         }
                     }
-                }
+                
              
 
             }

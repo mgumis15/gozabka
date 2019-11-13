@@ -18,16 +18,17 @@ namespace Sklep
             connection.Open();
             command = connection.CreateCommand();
 
-           
+
             command.CommandText = "select * from products";
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
 
             {
                 var x = reader["name"];
-                
+
             }
 
             reader.Close();
+        }
     }
 }

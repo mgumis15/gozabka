@@ -91,6 +91,7 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
+    <Content Include="Panel_Klienta.aspx" />
     <Content Include="Strona.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -102,6 +103,13 @@
     </Compile>
     <Compile Include="AlterowaniShop.aspx.designer.cs">
       <DependentUpon>AlterowaniShop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Panel_Klienta.aspx.cs">
+      <DependentUpon>Panel_Klienta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Panel_Klienta.aspx.designer.cs">
+      <DependentUpon>Panel_Klienta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Strona.aspx.cs">
       <DependentUpon>Strona.aspx</DependentUpon>

@@ -133,7 +133,7 @@ namespace Sklep
 
 
                 string nowe = Encode(tbNew.Text, nazwa);
-
+                     
                 Random generator = new Random();
                 int authCode = generator.Next(0, 99999);
 

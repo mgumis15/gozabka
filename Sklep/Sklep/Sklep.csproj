@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AlterowaniShop.aspx" />
     <Content Include="App_Data\Database.mdf" />
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
@@ -95,6 +96,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlterowaniShop.aspx.cs">
+      <DependentUpon>AlterowaniShop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlterowaniShop.aspx.designer.cs">
+      <DependentUpon>AlterowaniShop.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Strona.aspx.cs">
       <DependentUpon>Strona.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

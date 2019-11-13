@@ -75,7 +75,7 @@ namespace Sklep
             var authCheck = 0;
             if (tbAuth.Visible)
             {
-                tbName.Enabled = false;
+                
                 MySqlCommand command = connection.CreateCommand();
                 command.CommandText = "select * from users where name='" + tbName.Text + "'";
                 MySqlDataReader reader2 = command.ExecuteReader();
@@ -174,7 +174,7 @@ namespace Sklep
                                     lPassword.Visible = false;
                                     rfvPassword.Enabled = false;
                                     revPass.Enabled = false;
-
+                                    tbName.Enabled = false;  
                                 }
                             }
                         }

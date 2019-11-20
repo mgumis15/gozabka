@@ -22,7 +22,7 @@ namespace Sklep
         //Tutaj ją deklaruje
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
+            connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
         }

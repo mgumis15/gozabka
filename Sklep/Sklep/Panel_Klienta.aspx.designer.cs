@@ -114,6 +114,15 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.TextBox tbOld;
 
         /// <summary>
+        /// Kontrolka rfvOld.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvOld;
+
+        /// <summary>
         /// Kontrolka lNew.
         /// </summary>
         /// <remarks>
@@ -132,6 +141,24 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.TextBox tbNew;
 
         /// <summary>
+        /// Kontrolka rfvNew.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNew;
+
+        /// <summary>
+        /// Kontrolka revNew.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revNew;
+
+        /// <summary>
         /// Kontrolka lNewRep.
         /// </summary>
         /// <remarks>
@@ -148,6 +175,33 @@ namespace Sklep
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbNewRep;
+
+        /// <summary>
+        /// Kontrolka rfvRepNew.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRepNew;
+
+        /// <summary>
+        /// Kontrolka CompareValidator1.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
+
+        /// <summary>
+        /// Kontrolka vsPass.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsPass;
 
         /// <summary>
         /// Kontrolka btPass.

@@ -15,23 +15,28 @@ namespace Sklep
         MySqlCommand command;
 
         //musi byc zmienna przy przejsciu miedzy ekranami o id usera
-        String User = "22";
+        String User = "5";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection = new MySqlConnection("Database=sql7311615;Data Source=sql7.freesqldatabase.com;User Id=sql7311615;Password=tm2pULbIKM");
+            connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
         }
 
         protected void btHaslo_Click(object sender, EventArgs e)
         {
+            rfvNew.Enabled = false;
+            rfvOld.Enabled = false;
+            rfvRepNew.Enabled = false;
+            CompareValidator1.Enabled = false;
+            revNew.Enabled = false;
             lMail.Visible = true;
             lName.Visible = true;
             tbName.Visible = true;
             tbMail.Visible = true;
             btConfirm.Visible = true;
-
+            lInfo.Text = "";
             lOld.Visible = false;
             lNew.Visible = false;
             lNewRep.Visible = false;
@@ -63,7 +68,7 @@ namespace Sklep
 
             command.CommandText = "UPDATE `users` SET `name` = '" + tbName.Text + "', `email` = '" + tbMail.Text + "', `authorized` = '0' , `authorizationCode` = '" + authCode + "' WHERE `users`.`id` = " + User + "";
             command.ExecuteNonQuery();
-
+            
             SmtpClient client;
             MailMessage message;
 
@@ -90,19 +95,24 @@ namespace Sklep
 
         }
 
-        //deklaracja zmiennych bo jak dam potem to wydupca
+        //deklaracja zmiennych bo jak dam potem to nie dziala
         string old;
         string nazwa;
         string wpisane;
         //Zmiena hasla
         protected void btZmiana_Click(object sender, EventArgs e)
         {
+            rfvNew.Enabled = true;
+            rfvOld.Enabled = true;
+            rfvRepNew.Enabled = true;
+            CompareValidator1.Enabled = true;
+            revNew.Enabled = true;
             lMail.Visible = false;
             lName.Visible = false;
             tbName.Visible = false;
             tbMail.Visible = false;
             btConfirm.Visible = false;
-
+            lInfo.Text = "";
             lOld.Visible = true;
             lNew.Visible = true;
             lNewRep.Visible = true;
@@ -110,47 +120,7 @@ namespace Sklep
             tbNew.Visible = true;
             tbOld.Visible = true;
             tbNewRep.Visible = true;
-
-            MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select * from users where id='" + User + "'";
-            MySqlDataReader reader = command.ExecuteReader();
-
-            Boolean update = false;
-            while (reader.Read())
-            {
-                //Sprawdzenie czy stare haslo pasuje
-                 old = reader["password"].ToString();
-                 nazwa = reader["name"].ToString();
-                 wpisane = Encode(tbOld.Text, nazwa);
-                if (old == wpisane) {
-                    update = true;
-                }
-
-
-            if (update)
-            {
-                //zapisanie nowego hasła + wyslanie emaila
-
-
-                string nowe = Encode(tbNew.Text, nazwa);
-
-                Random generator = new Random();
-                int authCode = generator.Next(0, 99999);
-
-                command.CommandText = "UPDATE `users` SET `password` = '" + nowe + "', `authorized` = '0' , `authorizationCode` = '" + authCode + "' WHERE `users`.`id` = " + User + "";
-                command.ExecuteNonQuery();
-
-
-
-                lInfo.Text = "Zaktualizowano hasło, sprawdź maila i zaloguj się ponownie na strone.";
-
-            }
-                else
-                {
-                    lInfo.Text = "Stare hasło jest niepoprawne";
-                }
-            }
-            reader.Close();
+           
         }
 
         //Szyfrowanie
@@ -192,6 +162,81 @@ namespace Sklep
                 if (x == allAlf.Count()) x = 0;
             }
             return outputVal;
+        }
+
+        protected void btPass_Click(object sender, EventArgs e)
+        {
+            lInfo.Text = "accept.";
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select * from users where id='" + User + "'";
+            MySqlDataReader reader = command.ExecuteReader();
+            int authCode=0;
+            string nowe="";
+            Boolean update = false;
+            while (reader.Read())
+            {
+                //Sprawdzenie czy stare haslo pasuje
+                old = reader["password"].ToString();
+                nazwa = reader["name"].ToString();
+                wpisane = Encode(tbOld.Text, nazwa);
+                if (old == wpisane)
+                {
+                    
+                    update = true;
+                    lInfo.Text = "accept.";
+                }
+                else
+                {
+                    lInfo.Text = "nie.";
+                }
+
+
+                if (update)
+                {
+                    lInfo.Text = "jazda.";
+                    //zapisanie nowego hasła + wyslanie emaila
+                    nowe = Encode(tbNew.Text, nazwa);
+                    Random generator = new Random();
+                    authCode = generator.Next(0, 99999);
+
+                    lInfo.Text = "Zaktualizowano hasło, sprawdź maila i zaloguj się ponownie na strone.";
+                    SmtpClient client;
+                    MailMessage message;
+
+                    try
+                    {
+                        message = new MailMessage("Alterowani.Shop@gmail.com",reader["email"].ToString());
+                        message.Subject = "Zmiana hasła w serwisie Alterowani Shop";
+                        message.Body = "Witaj " + reader["name"].ToString() + ". Twoje hasło zostało pomyślnie zmienione. Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu!";
+
+                        client = new SmtpClient("smtp.gmail.com", 587);
+                        client.UseDefaultCredentials = false;
+                        client.EnableSsl = true;
+                        client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
+
+
+                        client.Send(message);
+                        lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        lInfo.Text = "You can not send messages (" + ex.Message + ")";
+                    }
+                }
+                else
+                {
+                    lInfo.Text = "Stare hasło jest niepoprawne";
+                }
+            }
+
+            reader.Close();
+            if (update)
+            {
+                command.CommandText = "UPDATE `users` SET `password` = '" + nowe + "', `authorized` = '0' , `authorizationCode` = '" + authCode + "' WHERE `users`.`id` = " + User + "";
+                command.ExecuteNonQuery();
+            }
+
         }
     }
 }

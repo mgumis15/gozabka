@@ -21,6 +21,9 @@
         .auto-style3 {
             height: 30px;
         }
+        .auto-style4 {
+            height: 26px;
+        }
     </style>
 </head>
 <body>
@@ -63,7 +66,7 @@
         </tr>
         <tr>
             <td class="auto-style3">
-                <asp:Label ID="lInfo" runat="server" Visible="False"></asp:Label>
+                <asp:Label ID="lInfo" runat="server"></asp:Label>
             </td>
             <td class="auto-style3">
                 <asp:Button ID="btConfirm" runat="server" OnClick="btConfirm_Click" Text="Zatwierdź" Visible="False" />
@@ -76,20 +79,23 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>
+            <td class="auto-style4">
                 <asp:Label ID="lOld" runat="server" Text="Stare hasło" Visible="False"></asp:Label>
             </td>
-            <td>
-                <asp:TextBox ID="tbOld" runat="server" Visible="False"></asp:TextBox>
+            <td class="auto-style4">
+                <asp:TextBox ID="tbOld" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvOld" runat="server" ControlToValidate="tbOld" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4"></td>
         </tr>
         <tr>
             <td>
                 <asp:Label ID="lNew" runat="server" Text="Nowe hasło" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbNew" runat="server" Visible="False"></asp:TextBox>
+                <asp:TextBox ID="tbNew" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvNew" runat="server" ControlToValidate="tbNew" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="revNew" runat="server" ControlToValidate="tbNew" Enabled="False" ErrorMessage="Hasło nie może zawierać białych znaków i musi być złożone" ForeColor="Red" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$">*</asp:RegularExpressionValidator>
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -98,14 +104,18 @@
                 <asp:Label ID="lNewRep" runat="server" Text="Powtórz nowe hasło" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbNewRep" runat="server" Visible="False"></asp:TextBox>
+                <asp:TextBox ID="tbNewRep" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvRepNew" runat="server" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
+                <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="tbNew" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Hasła nie są identyczne" ForeColor="Red">*</asp:CompareValidator>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>&nbsp;</td>
             <td>
-                <asp:Button ID="btPass" runat="server" Text="Zatwierdź" Visible="False" />
+                <asp:ValidationSummary ID="vsPass" runat="server" />
+            </td>
+            <td>
+                <asp:Button ID="btPass" runat="server" Text="Zatwierdź" Visible="False" OnClick="btPass_Click" />
             </td>
             <td>&nbsp;</td>
         </tr>

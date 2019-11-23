@@ -25,9 +25,8 @@ namespace Sklep
             connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
-            Debug.WriteLine("KURCZE");
             getData();
-       
+            Debug.WriteLine("Kurcze");
         }
 
        
@@ -102,6 +101,34 @@ namespace Sklep
             
         }
 
+        protected void cvModFile_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            bool x = false;
+            if (fModUpload.HasFile)
+            {
+                Regex rgx = new Regex(@"[\/.](gif|jpg|jpeg|tiff|png)$");
+                x = rgx.IsMatch(fModUpload.FileName) ? true : false;
+                if (x)
+                {
+                    args.IsValid = true;
+                }
+                else
+                {
+                    args.IsValid = false;
+                }
+            }
+            {
+                if (x)
+                {
+                    args.IsValid = true;
+                }
+                else
+                {
+                    args.IsValid = false;
+                }
+
+            }
+        }
 
         protected void getData()
         {
@@ -140,8 +167,9 @@ namespace Sklep
                 TableCell cellPhoto = new TableCell();
                 cellPhoto.Text = string.Format("<img src='Images/" + reader["image"] + "' class='imgTable'/>");
                 row.Cells.Add(cellPhoto);
+                images.Add(reader["image"].ToString());
 
-                
+
                 Button delButton = new Button();
                 delButton.ID = "delete" + reader["id"].ToString();
                 delButton.CausesValidation = false;
@@ -149,14 +177,24 @@ namespace Sklep
                 delButton.Text = "USUŃ";
                 delButton.CommandName = "{ 'id':" + reader["id"].ToString() + ",'row':"+x.ToString()+",'img':'" + reader["image"].ToString() + "'}";
                 delButton.Click += new EventHandler(this.delButton_Click);
-
-                images.Add(reader["image"].ToString());
-
-                
-
                 TableCell cellDelButt = new TableCell();
                 cellDelButt.Controls.Add(delButton);
                 row.Cells.Add(cellDelButt);
+
+                Button modButton = new Button();
+                modButton.ID = "mod" + reader["id"].ToString();
+                modButton.CausesValidation = false;
+                modButton.UseSubmitBehavior = false;
+                modButton.Text = "MODYFIKUJ";
+                
+                modButton.CommandName = "{ 'id':" + reader["id"].ToString() + ",'row':" + x.ToString() + ",'img':'" + reader["image"].ToString() + "','name':'"+ reader["name"].ToString() + "','price':'"+ reader["price"].ToString() + "','description':'"+ reader["description"].ToString() + "'}";
+                modButton.Click += new EventHandler(this.modButton_Click);
+                TableCell cellModButt = new TableCell();
+                cellModButt.Controls.Add(modButton);
+                row.Cells.Add(cellModButt);
+
+
+                
 
 
                 tProducts.Rows.Add(row);
@@ -165,22 +203,50 @@ namespace Sklep
             reader.Close();
             }
 
+        //BUTTON OD RPZEKAZANIA DANYCH USUWANIA
             protected void delButton_Click(object sender, EventArgs e)
             {
 
                 Button btn = sender as Button;
-                Debug.WriteLine("KLIK");
-                Debug.WriteLine(btn.CommandName);
-                JObject jsonObject = JObject.Parse(btn.CommandName);
-            
-                command.CommandText = "DELETE FROM `products` WHERE `id` = "+ jsonObject["id"] + ";";
-                command.ExecuteNonQuery();
+                hField.Value = btn.CommandName;
+                delDiv.Style.Add("display", "block");
+                modDiv.Style.Add("display", "none");
+        }
 
-                tProducts.Rows.RemoveAt(int.Parse(jsonObject["row"].ToString()));
+        protected void btDelete_Click(object sender, EventArgs e)
+        {
+            JObject jsonObject = JObject.Parse(hField.Value);
+
+            delDiv.Style.Add("display", "none");
+            modDiv.Style.Add("display", "none");
+            command.CommandText = "DELETE FROM `products` WHERE `id` = " + jsonObject["id"] + ";";
+            command.ExecuteNonQuery();
+
+            tProducts.Rows.RemoveAt(int.Parse(jsonObject["row"].ToString()));
 
             removeFiles(jsonObject["img"].ToString());
         }
-           protected void removeFiles(string file)
+
+
+        //BUTON OD MODYFIKACJI
+        protected void modButton_Click(object sender, EventArgs e)
+        {
+
+            Debug.WriteLine("MoD");
+
+            Button btn = sender as Button;
+            hField.Value = btn.CommandName;
+            JObject jsonObject = JObject.Parse(hField.Value);
+            tbModName.Text = jsonObject["name"].ToString();
+            tbModPrice.Text = jsonObject["price"].ToString();
+            tbModDescription.Text = jsonObject["description"].ToString();
+            modDiv.Style.Add("display", "block");
+            delDiv.Style.Add("display", "none");
+
+        }
+
+        //FUNKCJA USUWAJĄCA ZBĘDNE PLIKI
+        protected void removeFiles(string file)
         {
             int x = 0;
             foreach (string fileName in images)
@@ -194,7 +260,7 @@ namespace Sklep
             }
 
 
-           //ŚCIEŻKA DO ZMIANY 
+           //ŚCIEŻKA DO ZMIANY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             string path = "C:/Users/mateu/source/repos/gozabka/Sklep/Sklep/Images/";
 
 
@@ -217,5 +283,38 @@ namespace Sklep
             }
         }
 
+        protected void btMod_Click(object sender, EventArgs e)
+        {
+            JObject jsonObject = JObject.Parse(hField.Value);
+            if (Page.IsValid)
+            {
+                Debug.WriteLine("Jedziemy");
+                string sPrice = tbModPrice.Text;
+                sPrice = sPrice.Replace(",", ".");
+                float price = float.Parse(sPrice, CultureInfo.InvariantCulture.NumberFormat);
+                if (fModUpload.HasFile)
+                {
+                    string filename = Path.GetFileName(fModUpload.FileName);
+                    fModUpload.SaveAs(Server.MapPath("Images/") + filename);
+                    command.CommandText = "UPDATE products SET name='" + tbModName.Text + "',price=" + sPrice + ",description='" + tbModDescription.Text + "',image='"+fModUpload.FileName+"' WHERE id=" + jsonObject["id"];
+                    command.ExecuteNonQuery();
+                }
+                else
+                {
+                    command.CommandText = "UPDATE products SET name='" + tbModName.Text + "',price=" + sPrice + ",description='" + tbModDescription.Text + "' WHERE id=" + jsonObject["id"];
+                    command.ExecuteNonQuery();
+                }
+                getData();
+                modDiv.Style.Add("display", "none");
+                delDiv.Style.Add("display", "none");
+            }
+            else
+            {
+
+            }
+
+
+
+        }
     }
 }

@@ -21,12 +21,41 @@
         .auto-style1 {
             margin-top: 9px;
         }
+         #dMain{
+            display:inline-block;
+            
+        }
+        #rightDiv{
+            display:inline-block;
+            position:fixed;
+            left:60%;
+            top:5%;
+
+        }
+       
+        #modDiv{
+            display:none;
+           width:300px;
+           height:200px;
+           border:1px solid black;
+           background-color:#00bcd4;
+           text-align:center;
+
+        }
+        #delDiv{
+            display:none;
+           width:300px;
+           height:100px;
+           border:1px solid black;
+           background-color:#ff5252;
+           text-align:center;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div id="dMain" runat="server">
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Adding"/>
              <asp:Table ID="tProducts" runat="server">
                  <asp:TableRow >
                      <asp:TableCell Font-Bold="True">
@@ -51,38 +80,75 @@
                      <asp:TableCell runat="server">
 
                           <asp:TextBox ID="tbName" runat="server" CssClass="auto-style1"></asp:TextBox>
-                         <asp:RequiredFieldValidator ID="rfvName" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbName"></asp:RequiredFieldValidator>
+                         <asp:RequiredFieldValidator ID="rfvName" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbName" ValidationGroup="Adding"></asp:RequiredFieldValidator>
 
                      </asp:TableCell>
                      <asp:TableCell runat="server">
 
                          <asp:TextBox ID="tbPrice" runat="server" ControlToValidate="tbPrice"></asp:TextBox>
-                         <asp:RequiredFieldValidator ID="rfvPrice" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbPrice"></asp:RequiredFieldValidator>
-                         <asp:RegularExpressionValidator ID="revPrice" runat="server" ErrorMessage="Podaj poprawną cenę" Text="*" ControlToValidate="tbPrice" ValidationExpression="^\d+(?:[\.\,]\d+)?$"></asp:RegularExpressionValidator>
+                         <asp:RequiredFieldValidator ID="rfvPrice" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbPrice" ValidationGroup="Adding"></asp:RequiredFieldValidator>
+                         <asp:RegularExpressionValidator ID="revPrice" runat="server" ErrorMessage="Podaj poprawną cenę" Text="*" ControlToValidate="tbPrice" ValidationExpression="^\d+(?:[\.\,]\d+)?$" ValidationGroup="Adding"></asp:RegularExpressionValidator>
 
                      </asp:TableCell>
                      <asp:TableCell runat="server">
 
                          <asp:TextBox ID="tbDescription" runat="server"></asp:TextBox>
-                         <asp:RequiredFieldValidator ID="rfvDescription" runat="server" Text="*" ControlToValidate="tbDescription"></asp:RequiredFieldValidator>
+                         <asp:RequiredFieldValidator ID="rfvDescription" runat="server" Text="*"  ErrorMessage="To pole jest wymagane" ControlToValidate="tbDescription" ValidationGroup="Adding"></asp:RequiredFieldValidator>
 
                      </asp:TableCell>
                      <asp:TableCell runat="server">
 
                          <asp:FileUpload ID="fUpload" runat="server" />
-                         <asp:RequiredFieldValidator ID="rfvFile" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="fUpload"></asp:RequiredFieldValidator>
-                         <asp:CustomValidator ID="cvFile" runat="server" ErrorMessage="Zły format pliku" Text="*" ControlToValidate="fUpload" OnServerValidate="cvFile_ServerValidate" ></asp:CustomValidator>
+                         <asp:RequiredFieldValidator ID="rfvFile" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="fUpload" ValidationGroup="Adding"></asp:RequiredFieldValidator>
+                         <asp:CustomValidator ID="cvFile" runat="server" ErrorMessage="Zły format pliku" Text="*" ControlToValidate="fUpload" OnServerValidate="cvFile_ServerValidate" ValidationGroup="Adding"></asp:CustomValidator>
 
                      </asp:TableCell>
                         <asp:TableCell runat="server">
-                            <asp:Button ID="bAdd" runat="server" Text="Dodaj produkt" OnClick="bAdd_Click" />
+                            <asp:Button ID="bAdd" runat="server" Text="Dodaj produkt" OnClick="bAdd_Click" ValidationGroup="Adding" UseSubmitBehavior="True" />
                      </asp:TableCell>
                  </asp:TableRow>
 
         </asp:Table>
-            
+           
+            <asp:HiddenField ID="hField" runat="server" />
+           
         </div>
-       
+        <div id="rightDiv" runat="server">
+            <div id="modDiv" runat="server"> 
+                  <asp:Label ID="lModID" runat="server" Text=""></asp:Label>
+                <br />
+                <asp:Label ID="lModName" runat="server" Text="Nazwa"></asp:Label>
+                &nbsp;<asp:TextBox ID="tbModName" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvModName" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbModName" ValidationGroup="Modifying"></asp:RequiredFieldValidator>
+                <br />
+                <asp:Label ID="lModPrice" runat="server" Text="Cena"></asp:Label>
+                &nbsp;&nbsp;&nbsp;
+                <asp:TextBox ID="tbModPrice" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvModPrice" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbModPrice" ValidationGroup="Modifying"></asp:RequiredFieldValidator>
+                   <asp:RegularExpressionValidator ID="rev" runat="server" ErrorMessage="Podaj poprawną cenę" Text="*" ControlToValidate="tbModPrice" ValidationExpression="^\d+(?:[\.\,]\d+)?$" ValidationGroup="Modifying"></asp:RegularExpressionValidator>
+                <br />
+                <asp:Label ID="lModDescription" runat="server" Text="Opis"></asp:Label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:TextBox ID="tbModDescription" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvModDescription" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbModDescription" ValidationGroup="Modifying"></asp:RequiredFieldValidator>
+                <br />
+                <asp:Label ID="lModPhoto" runat="server" Text="Zdjęcie"></asp:Label>
+                &nbsp;<asp:FileUpload ID="fModUpload" runat="server" />
+                
+                 <asp:CustomValidator ID="cvModFile" runat="server" ErrorMessage="Zły format pliku" Text="*" ControlToValidate="fModUpload"  ValidationGroup="Modifying" OnServerValidate="cvModFile_ServerValidate"></asp:CustomValidator>
+                <br />
+                <asp:Button ID="btMod" runat="server" Text="MODYFIKUJ" ValidationGroup="Modifying" OnClick="btMod_Click"/>   
+
+                <asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="Modifying"/>
+            </div>
+                <div id="delDiv" runat="server">
+                    <asp:Label ID="lDelName" runat="server" Text="USUŃ"></asp:Label>
+                    <br />
+                    <asp:Label ID="lDelID" runat="server" Text=""></asp:Label>
+                       <br />
+                    <asp:Button ID="btDelete" runat="server" Text="USUŃ" OnClick="btDelete_Click" CausesValidation="False" />
+                </div>
+            </div>
         
        
        

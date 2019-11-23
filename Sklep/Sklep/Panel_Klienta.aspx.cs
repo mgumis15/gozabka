@@ -124,7 +124,7 @@ namespace Sklep
         }
 
         //Szyfrowanie
-        private string Encode(string pass, string name)
+        private string Encode(string pass)
         {
             List<char> printableChars = new List<char>();
             for (int i = char.MinValue; i <= char.MaxValue; i++)
@@ -139,7 +139,7 @@ namespace Sklep
             List<List<char>> allAlf = new List<List<char>>();
             string old = pass;
             string outputVal = "";
-            string klucz = name;
+            string klucz = "WróćDoMnie<3";
             klucz = klucz.Replace(" ", "");
             string result = string.Join("", klucz.ToCharArray().Distinct());
             foreach (char element in result)
@@ -178,7 +178,7 @@ namespace Sklep
                 //Sprawdzenie czy stare haslo pasuje
                 old = reader["password"].ToString();
                 nazwa = reader["name"].ToString();
-                wpisane = Encode(tbOld.Text, nazwa);
+                wpisane = Encode(tbOld.Text);
                 if (old == wpisane)
                 {
                     
@@ -195,7 +195,7 @@ namespace Sklep
                 {
                     lInfo.Text = "jazda.";
                     //zapisanie nowego hasła + wyslanie emaila
-                    nowe = Encode(tbNew.Text, nazwa);
+                    nowe = Encode(tbNew.Text);
                     Random generator = new Random();
                     authCode = generator.Next(0, 99999);
 

@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Panel_Klienta.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="AlterowaniShop.aspx" />
     <Content Include="Strona.aspx" />
@@ -96,6 +97,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Panel_Klienta.aspx.cs">
+      <DependentUpon>Panel_Klienta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Panel_Klienta.aspx.designer.cs">
+      <DependentUpon>Panel_Klienta.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

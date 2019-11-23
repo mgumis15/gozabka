@@ -134,7 +134,7 @@ namespace Sklep
                         {
                             //wysylanie maila
                             int authCode = MailAuthSender(tbMail.Text, tbName.Text);
-                            string outputVal = Encode(tbPassword.Text, tbName.Text);
+                            string outputVal = Encode(tbPassword.Text);
                             command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user');";
                             command.ExecuteNonQuery();
                         }
@@ -151,7 +151,7 @@ namespace Sklep
                         if (reader["name"].ToString() == tbName.Text)
                         {
                             Debug.WriteLine("coś się dzieje");
-                            string outputVal = Encode(tbPassword.Text, tbName.Text);
+                            string outputVal = Encode(tbPassword.Text);
                             if (outputVal == reader["password"].ToString())
                             {
                                 Debug.WriteLine("kodzik:");
@@ -188,7 +188,7 @@ namespace Sklep
         }
 
         //SZYFROWANIE
-        private string Encode(string pass, string name)
+        private string Encode(string pass)
         {
             List<char> printableChars = new List<char>();
             for (int i = char.MinValue; i <= char.MaxValue; i++)
@@ -203,7 +203,7 @@ namespace Sklep
             List<List<char>> allAlf = new List<List<char>>();
             string old = pass;
             string outputVal = "";
-            string klucz = name;
+            string klucz = "WróćDoMnie<3";
             klucz = klucz.Replace(" ", "");
             string result = string.Join("", klucz.ToCharArray().Distinct());
             foreach (char element in result)

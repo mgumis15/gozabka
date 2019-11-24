@@ -9,6 +9,7 @@
     <style type="text/css">
         .auto-style1 {
             width: 100%;
+            height: 432px;
         }
         .auto-style2 {
             height: 23px;
@@ -23,6 +24,12 @@
         }
         .auto-style4 {
             height: 26px;
+        }
+        .auto-style5 {
+            width: 100%;
+        }
+        td{
+            width:20%;
         }
     </style>
 </head>
@@ -117,6 +124,45 @@
             <td>
                 <asp:Button ID="btPass" runat="server" Text="Zatwierdź" Visible="False" OnClick="btPass_Click" />
             </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
+                <asp:Label ID="lKoszyk" runat="server"></asp:Label>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
+                <asp:Table ID="tKoszyk" runat="server">
+                </asp:Table>
+                
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
     </table>

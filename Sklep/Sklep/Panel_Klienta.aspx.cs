@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
+
 namespace Sklep
 {
     public partial class Panel_Klienta : System.Web.UI.Page
     {
-
+        string products = "";
         MySqlConnection connection;
         MySqlCommand command;
 
@@ -22,6 +26,96 @@ namespace Sklep
             connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
+
+            
+
+
+            
+        }
+        protected void Page_LoadComplete()
+        {
+           
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select * from users where id='" + User + "'";
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+
+            {
+                products = reader["koszyk"].ToString();
+
+            }
+            reader.Close();
+            if (products == "")
+            {
+                lKoszyk.Text = "Twój koszyk jest pusty";
+            }
+            else
+            {
+                List<string> names = products.Split(';').ToList<string>();
+                command.CommandText = "select * from products";
+                MySqlDataReader reader2 = command.ExecuteReader();
+                int x = 0;
+                while (reader2.Read())
+
+                {
+                    
+                    foreach (string id in names)
+                    {
+                        if (reader2["id"].ToString() == id)
+                        {
+                            x++;
+                            TableRow row = new TableRow();
+
+                            TableCell cellID = new TableCell();
+                            cellID.Text = x.ToString();
+                            row.Cells.Add(cellID);
+
+                            TableCell cellName = new TableCell();
+                            cellName.Text = reader2["name"].ToString();
+                            row.Cells.Add(cellName);
+
+                            TableCell cellPrice = new TableCell();
+                            cellPrice.Text = reader2["price"].ToString();
+                            row.Cells.Add(cellPrice);
+
+                            TableCell cellDescription = new TableCell();
+                            cellDescription.Text = reader2["description"].ToString();
+                            row.Cells.Add(cellDescription);
+
+                            //img do ogarniecia
+                            TableCell cellPhoto = new TableCell();
+                            cellPhoto.Text = string.Format("<img src='Images/" + reader2["image"] + "' class='imgTable'/>");
+                            row.Cells.Add(cellPhoto);
+
+                            Button delButton = new Button();
+                            delButton.ID = "delete" + reader2["id"].ToString();
+                            delButton.CausesValidation = false;
+                            delButton.UseSubmitBehavior = false;
+                            delButton.Text = "USUŃ Z KOSZYKA";
+                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+"}";
+                            delButton.Click += new EventHandler(this.delButton_Click);
+                            TableCell cellDelButt = new TableCell();
+                            cellDelButt.Controls.Add(delButton);
+                            row.Cells.Add(cellDelButt);
+
+                            tKoszyk.Rows.Add(row);
+                            
+                        }
+                    }
+                  
+
+                }
+                reader2.Close();
+
+            }
+        }
+        protected void delButton_Click(object sender, EventArgs e)
+        {
+            lKoszyk.Text = "usunieto";
+            //Debug.WriteLine(products);
+            //string nowy = "";
+            //command.CommandText = "UPDATE `users` SET  `users`.`koszyk` = `"+ nowy + "` WHERE `users`.`id` = " + User + "";
+            //command.ExecuteNonQuery();
         }
 
         protected void btHaslo_Click(object sender, EventArgs e)
@@ -44,7 +138,7 @@ namespace Sklep
             tbNew.Visible = false;
             tbOld.Visible = false;
             tbNewRep.Visible = false;
-
+           
 
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select * from users where id='" + User + "'";
@@ -238,5 +332,14 @@ namespace Sklep
             }
 
         }
+
+   
+
+
+          
+
+
+
+        
     }
 }

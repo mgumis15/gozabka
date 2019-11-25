@@ -27,12 +27,13 @@ namespace Sklep
             connection.Open();
             command = connection.CreateCommand();
 
-            
+            getData();
 
 
-            
+
+
         }
-        protected void Page_LoadComplete()
+        protected void getData()
         {
            
             MySqlCommand command = connection.CreateCommand();
@@ -45,23 +46,24 @@ namespace Sklep
 
             }
             reader.Close();
-            if (products == "")
+            JObject jsonObject = JObject.Parse(products);
+            if (jsonObject["data"].ToString() == "[]")
             {
                 lKoszyk.Text = "Twój koszyk jest pusty";
             }
             else
             {
-                List<string> names = products.Split(';').ToList<string>();
+                
                 command.CommandText = "select * from products";
                 MySqlDataReader reader2 = command.ExecuteReader();
                 int x = 0;
                 while (reader2.Read())
 
                 {
-                    
-                    foreach (string id in names)
+
+                    foreach (JObject id in jsonObject["data"])
                     {
-                        if (reader2["id"].ToString() == id)
+                        if (reader2["id"].ToString() == id["id"].ToString())
                         {
                             x++;
                             TableRow row = new TableRow();
@@ -92,7 +94,7 @@ namespace Sklep
                             delButton.CausesValidation = false;
                             delButton.UseSubmitBehavior = false;
                             delButton.Text = "USUŃ Z KOSZYKA";
-                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+"}";
+                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+",'row':"+(x-1)+ ",'data':"+ jsonObject["data"].ToString() + "}";
                             delButton.Click += new EventHandler(this.delButton_Click);
                             TableCell cellDelButt = new TableCell();
                             cellDelButt.Controls.Add(delButton);
@@ -111,11 +113,25 @@ namespace Sklep
         }
         protected void delButton_Click(object sender, EventArgs e)
         {
+
             lKoszyk.Text = "usunieto";
-            //Debug.WriteLine(products);
-            //string nowy = "";
-            //command.CommandText = "UPDATE `users` SET  `users`.`koszyk` = `"+ nowy + "` WHERE `users`.`id` = " + User + "";
-            //command.ExecuteNonQuery();
+            Button btn = sender as Button;
+            JObject jObject = JObject.Parse(btn.CommandName);
+            foreach(JObject element in jObject["data"])
+            {
+                if(element["id"].ToString()== jObject["id"].ToString())
+                {
+                    element.Remove();
+                    break;
+                }
+            }
+            tKoszyk.Rows.RemoveAt(int.Parse(jObject["row"].ToString()));
+            JObject data = JObject.Parse("{data:" + jObject["data"].ToString() + "}");
+            string dataStr=data.ToString();
+            dataStr=dataStr.Replace("\"", "");
+            Debug.WriteLine(dataStr);
+            command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = 5";
+            command.ExecuteNonQuery();
         }
 
         protected void btHaslo_Click(object sender, EventArgs e)

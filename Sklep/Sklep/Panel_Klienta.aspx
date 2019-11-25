@@ -19,6 +19,17 @@
             text-align:center;
             heigth:auto;
         }
+        #tKoszyk{
+            border:1px solid black;
+            padding:5px;
+        }
+        #tKoszyk td{
+            border:1px solid black;
+        }
+        .imgTable{
+            width:50px;
+            height:50px;
+        }
         .auto-style3 {
             height: 30px;
         }

@@ -312,9 +312,6 @@ namespace Sklep
             {
 
             }
-
-
-
         }
     }
 }

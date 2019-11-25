@@ -130,7 +130,7 @@ namespace Sklep
             string dataStr=data.ToString();
             dataStr=dataStr.Replace("\"", "");
             Debug.WriteLine(dataStr);
-            command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = 5";
+            command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = "+User;
             command.ExecuteNonQuery();
         }
 

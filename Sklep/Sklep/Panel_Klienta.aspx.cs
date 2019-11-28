@@ -122,11 +122,6 @@ namespace Sklep
                             row.Cells.Add(cellSelect);
 
 
-
-
-
-
-
                             Button delButton = new Button();
                             delButton.ID = "delete" + reader2["id"].ToString();
                             delButton.CausesValidation = false;

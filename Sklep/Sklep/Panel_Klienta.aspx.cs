@@ -14,7 +14,7 @@ namespace Sklep
 {
     public partial class Panel_Klienta : System.Web.UI.Page
     {
-        string products = "";
+        
         MySqlConnection connection;
         MySqlCommand command;
 
@@ -42,15 +42,16 @@ namespace Sklep
             while (reader.Read())
 
             {
-                products = reader["koszyk"].ToString();
+                hfKoszyk.Value = reader["koszyk"].ToString();
 
             }
             reader.Close();
-            JObject jsonObject = JObject.Parse(products);
+            JObject jsonObject = JObject.Parse(hfKoszyk.Value);
             if (jsonObject["data"].ToString() == "[]")
             {
                 lKoszyk.Text = "Twój koszyk jest pusty";
             }
+
             else
             {
                 
@@ -89,6 +90,43 @@ namespace Sklep
                             cellPhoto.Text = string.Format("<img src='Images/" + reader2["image"] + "' class='imgTable'/>");
                             row.Cells.Add(cellPhoto);
 
+
+                            DropDownList select = new DropDownList();
+                            select.ID = "select/" + reader2["id"].ToString();
+
+                            string choosen="";
+                            foreach (JObject element in jsonObject["data"])
+                            {
+                                if (reader2["id"].ToString() == element["id"].ToString())
+                                {
+                                    choosen = element["ilosc"].ToString();
+                                    break;
+                                }
+                            }
+                            for ( int i = 1; i <= 10; i++)
+                            {
+                                ListItem option = new ListItem();
+                                option.Text = i.ToString();
+                                option.Value = i.ToString();
+                                if(i.ToString()== choosen)
+                                {
+                                    option.Selected = true;
+                                }
+                                select.Items.Add(option);
+                            }
+                            select.SelectedIndexChanged += this.select_SelectedIndexChanged;
+                            select.AutoPostBack = true;
+
+                            TableCell cellSelect = new TableCell();
+                            cellSelect.Controls.Add(select);
+                            row.Cells.Add(cellSelect);
+
+
+
+
+
+
+
                             Button delButton = new Button();
                             delButton.ID = "delete" + reader2["id"].ToString();
                             delButton.CausesValidation = false;
@@ -110,6 +148,26 @@ namespace Sklep
                 reader2.Close();
 
             }
+        }
+
+        protected void select_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList ddp = sender as DropDownList;
+            string[] x = ddp.ID.Split("/".ToCharArray());
+            JObject jsonObject = JObject.Parse(hfKoszyk.Value);
+            foreach (JObject element in jsonObject["data"])
+            {
+                if (element["id"].ToString() == x[1])
+                {
+                    element["ilosc"] = ddp.SelectedValue;
+                }
+            }
+            string wynik = jsonObject.ToString();
+            wynik = wynik.Replace("\"", "");
+            Debug.WriteLine(wynik);
+            command.CommandText = "UPDATE `users` SET `koszyk` = '" + wynik + "' WHERE `users`.`id` = " + User;
+            command.ExecuteNonQuery();
+
         }
         protected void delButton_Click(object sender, EventArgs e)
         {
@@ -133,6 +191,14 @@ namespace Sklep
             command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = "+User;
             command.ExecuteNonQuery();
         }
+
+
+
+        protected void bBuy_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Kupujemy");
+        }
+
 
         protected void btHaslo_Click(object sender, EventArgs e)
         {
@@ -346,16 +412,8 @@ namespace Sklep
                 command.CommandText = "UPDATE `users` SET `password` = '" + nowe + "', `authorized` = '0' , `authorizationCode` = '" + authCode + "' WHERE `users`.`id` = " + User + "";
                 command.ExecuteNonQuery();
             }
-
         }
 
-   
-
-
-          
-
-
-
-        
+      
     }
 }

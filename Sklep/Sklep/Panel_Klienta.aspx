@@ -36,9 +36,6 @@
         .auto-style4 {
             height: 26px;
         }
-        .auto-style5 {
-            width: 100%;
-        }
         td{
             width:20%;
         }
@@ -126,7 +123,9 @@
                 <asp:RequiredFieldValidator ID="rfvRepNew" runat="server" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="tbNew" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Hasła nie są identyczne" ForeColor="Red">*</asp:CompareValidator>
             </td>
-            <td>&nbsp;</td>
+            <td>
+                <asp:HiddenField ID="hfKoszyk" runat="server" />
+            </td>
         </tr>
         <tr>
             <td>
@@ -153,7 +152,9 @@
                 </asp:Table>
                 
             </td>
-            <td>&nbsp;</td>
+            <td style="text-align: left">
+                <asp:Button ID="bBuy" runat="server" CausesValidation="False" OnClick="bBuy_Click" Text="KUPUJĘ!" />
+            </td>
         </tr>
         <tr>
             <td>

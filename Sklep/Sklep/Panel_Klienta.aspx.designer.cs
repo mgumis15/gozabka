@@ -195,6 +195,15 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
 
         /// <summary>
+        /// hfKoszyk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfKoszyk;
+
+        /// <summary>
         /// vsPass control.
         /// </summary>
         /// <remarks>
@@ -229,5 +238,14 @@ namespace Sklep
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table tKoszyk;
+
+        /// <summary>
+        /// bBuy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button bBuy;
     }
 }

@@ -13,6 +13,8 @@ namespace Sklep
     public partial class platnosc : System.Web.UI.Page
     {
         String User = "5";
+        String kosz = "";
+
         MySqlConnection connection;
         MySqlCommand command;
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +25,7 @@ namespace Sklep
             getData();
         }
 
-
+        //pobranie koszyka
         protected void getData()
         {
 
@@ -67,6 +69,7 @@ namespace Sklep
                             TableCell cellName = new TableCell();
                             cellName.Text = reader2["name"].ToString();
                             row.Cells.Add(cellName);
+                            kosz += reader2["name"].ToString() + ", ";
 
                             TableCell cellPrice = new TableCell();
                             cellPrice.Text = reader2["price"].ToString();
@@ -110,6 +113,79 @@ namespace Sklep
                 }
                 reader2.Close();
 
+            }
+        }
+        //wybor platnosci
+        protected void rbDostawa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rbDostawa.SelectedIndex == 1)
+            {
+                rbPlatnosc.SelectedIndex = 3;
+                rbPlatnosc.Enabled = false;
+            }
+            else
+            {
+                rbPlatnosc.SelectedIndex = 0;
+                rbPlatnosc.Enabled = true;
+            }
+        }
+        //confirm
+        protected void btKup_Click(object sender, EventArgs e)
+        {
+            if(rbPlatnosc.SelectedIndex==3&&rbDostawa.SelectedIndex != 1)
+            {
+                lInfo.Text = "Wybierz poprawną formę płatnośći";
+                rbPlatnosc.SelectedIndex = 0;
+            }
+            else
+            {
+                SmtpClient client;
+                MailMessage message;
+                string mail = "";
+                string name = "";
+                double cena = 1123.31;
+                string dostawa = "";
+
+                if (rbPlatnosc.SelectedIndex == 3)
+                {
+                    dostawa = "Wybrano płatność przy odbiorze.\n";
+                }
+                else
+                {
+                    dostawa = "Wybrano płatność internetową. Zrób przelew na kwotę " + cena + " zł.\nNumer Konta to 00 0000 0000 0000 0000 0000 0000.\n";
+                }
+
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "select * from users where id='" + User + "'";
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+
+                {
+                    mail = reader["email"].ToString();
+                    name = reader["name"].ToString();
+                }
+                reader.Close();
+
+                try
+                {
+                    message = new MailMessage("Alterowani.Shop@gmail.com", mail);
+                    message.Subject = "Zakup produktów na Alterowani Shop";
+                    message.Body = "Witaj " + name + ". Twoje zamówienie zostało złożone.\nKupione produkty: "+kosz+"\n"+dostawa+"Dziękujemy za zakupy w nasym sklepie";
+
+                    client = new SmtpClient("smtp.gmail.com", 587);
+                    client.UseDefaultCredentials = false;
+                    client.EnableSsl = true;
+                    client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
+
+
+                    client.Send(message);
+                    lInfo.Text = "Zamównienie zostało złożone. Wysłano wiadomość adres email.";
+
+                }
+                catch (Exception ex)
+                {
+                    lInfo.Text = "You can not send messages (" + ex.Message + ")";
+                }
             }
         }
     }

@@ -36,7 +36,6 @@ namespace Sklep
         protected void getData()
         {
            
-            MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select * from users where id='" + User + "'";
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -67,6 +66,7 @@ namespace Sklep
                         if (reader2["id"].ToString() == id["id"].ToString())
                         {
                             x++;
+
                             TableRow row = new TableRow();
 
                             TableCell cellID = new TableCell();
@@ -132,7 +132,7 @@ namespace Sklep
                             delButton.CausesValidation = false;
                             delButton.UseSubmitBehavior = false;
                             delButton.Text = "USUŃ Z KOSZYKA";
-                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+",'row':"+(x-1)+ ",'data':"+ jsonObject["data"].ToString() + "}";
+                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+",'row':"+x+ ",'data':"+ jsonObject["data"].ToString() + "}";
                             delButton.Click += new EventHandler(this.delButton_Click);
                             TableCell cellDelButt = new TableCell();
                             cellDelButt.Controls.Add(delButton);

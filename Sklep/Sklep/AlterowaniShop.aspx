@@ -9,17 +9,40 @@
     <style type="text/css">
         .auto-style1 {
             width: 100%;
+            height: 432px;
         }
         .auto-style2 {
             height: 23px;
         }
-        td {
-            width:33%;
-
+        td{
+            width:33.3%;
+            text-align:center;
+            heigth:auto;
+        }
+        #tShop{
+            border:1px solid black;
+            padding:5px;
+        }
+        #tShop td{
+            border:1px solid black;
+        }
+        .imgTable{
+            width:50px;
+            height:50px;
+        }
+        .auto-style3 {
+            height: 30px;
+        }
+        .auto-style4 {
+            height: 26px;
+        }
+        td{
+            width:20%;
         }
     </style>
 </head>
 <body>
+    <form id="form1" runat="server">
     <table class="auto-style1">
         <tr>
             <td class="auto-style2">Strona Główna</td>
@@ -31,26 +54,9 @@
             <td id="cont" class="auto-style2"></td>
             <td class="auto-style2"></td>
         </tr>
-        <tr>
-            <td class="auto-style2"></td>
-            <td class="auto-style2"></td>
-            <td class="auto-style2"></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+        </table>
+        <asp:Table ID="tShop" runat="server">
+        </asp:Table>
+    </form>
 </body>
 </html>

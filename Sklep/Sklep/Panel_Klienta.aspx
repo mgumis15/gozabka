@@ -149,6 +149,14 @@
                 &nbsp;</td>
             <td>
                 <asp:Table ID="tKoszyk" runat="server">
+                    <asp:TableRow runat="server" Font-Bold="True">
+                        <asp:TableCell runat="server" Font-Bold="True">Nr.</asp:TableCell>
+                        <asp:TableCell runat="server" Font-Bold="True">Nazwa</asp:TableCell>
+                        <asp:TableCell runat="server" Font-Bold="True">Cena</asp:TableCell>
+                        <asp:TableCell runat="server" Font-Bold="True">Opis</asp:TableCell>
+                        <asp:TableCell runat="server" Font-Bold="True">Miniaturka</asp:TableCell>
+                        <asp:TableCell runat="server" Font-Bold="True">Ilość</asp:TableCell>
+                    </asp:TableRow>
                 </asp:Table>
                 
             </td>

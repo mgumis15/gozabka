@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Panel_Klienta.aspx" />
+    <Content Include="platnosc.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="AlterowaniShop.aspx" />
     <Content Include="Strona.aspx" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="Panel_Klienta.aspx.designer.cs">
       <DependentUpon>Panel_Klienta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="platnosc.aspx.cs">
+      <DependentUpon>platnosc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="platnosc.aspx.designer.cs">
+      <DependentUpon>platnosc.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>

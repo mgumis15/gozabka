@@ -92,7 +92,7 @@ namespace Sklep
                     {
 
                         lInfo.Visible = true;
-                        lInfo.Text = "Podano błędny kod autoryzacyjne. Wprowadź kod ponownie";
+                        lInfo.Text = "Podano błędny kod autoryzacyjny. Wprowadź kod ponownie";
                         tbAuth.Text = "";
                     }
                 }

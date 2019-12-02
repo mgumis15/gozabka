@@ -93,7 +93,7 @@
     <Content Include="platnosc.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="AlterowaniShop.aspx" />
-    <Content Include="Strona.aspx" />
+    <Content Include="Logowanie.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -126,12 +126,12 @@
     <Compile Include="AlterowaniShop.aspx.designer.cs">
       <DependentUpon>AlterowaniShop.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Strona.aspx.cs">
-      <DependentUpon>Strona.aspx</DependentUpon>
+    <Compile Include="Logowanie.aspx.cs">
+      <DependentUpon>Logowanie.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Strona.aspx.designer.cs">
-      <DependentUpon>Strona.aspx</DependentUpon>
+    <Compile Include="Logowanie.aspx.designer.cs">
+      <DependentUpon>Logowanie.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

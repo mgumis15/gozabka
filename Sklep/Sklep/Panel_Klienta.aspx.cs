@@ -19,15 +19,29 @@ namespace Sklep
         MySqlCommand command;
 
         //musi byc zmienna przy przejsciu miedzy ekranami o id usera
-        String User = "5";
+        string User ;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
-            connection.Open();
-            command = connection.CreateCommand();
+          
 
-            getData();
+
+            if (Session["id"] != null)
+            {
+                User = Session["id"].ToString();
+                connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
+                connection.Open();
+                command = connection.CreateCommand();
+                
+                getData();
+            }
+            else
+            {
+                Response.Redirect("Logowanie.aspx");
+            }
+
+
+            
 
 
 
@@ -35,16 +49,16 @@ namespace Sklep
         }
         protected void getData()
         {
-           
+            Debug.WriteLine(User);
             command.CommandText = "select * from users where id='" + User + "'";
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-
+            MySqlDataReader readerKoszykowski = command.ExecuteReader();
+            while (readerKoszykowski.Read())
             {
-                hfKoszyk.Value = reader["koszyk"].ToString();
+                hfKoszyk.Value = readerKoszykowski["koszyk"].ToString();
 
             }
-            reader.Close();
+            readerKoszykowski.Close();
+            Debug.WriteLine(hfKoszyk.Value);
             JObject jsonObject = JObject.Parse(hfKoszyk.Value);
             if (jsonObject["data"].ToString() == "[]")
             {
@@ -159,7 +173,6 @@ namespace Sklep
             }
             string wynik = jsonObject.ToString();
             wynik = wynik.Replace("\"", "");
-            Debug.WriteLine(wynik);
             command.CommandText = "UPDATE `users` SET `koszyk` = '" + wynik + "' WHERE `users`.`id` = " + User;
             command.ExecuteNonQuery();
 
@@ -182,7 +195,6 @@ namespace Sklep
             JObject data = JObject.Parse("{data:" + jObject["data"].ToString() + "}");
             string dataStr=data.ToString();
             dataStr=dataStr.Replace("\"", "");
-            Debug.WriteLine(dataStr);
             command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = "+User;
             command.ExecuteNonQuery();
         }
@@ -191,7 +203,7 @@ namespace Sklep
 
         protected void bBuy_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("Kupujemy");
+            
         }
 
 

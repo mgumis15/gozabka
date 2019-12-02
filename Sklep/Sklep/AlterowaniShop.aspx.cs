@@ -14,15 +14,14 @@ namespace Sklep
     {
         MySqlConnection connection;
         MySqlCommand command;
-        String User = "5";
-        
+        string User=null ;
+        JArray koszykArray;
         protected void Page_Load(object sender, EventArgs e)
         {
-
             connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
-
+            if(Session["id"]!=null) User = Session["id"].ToString();
             getData();
         }
         protected void getData()
@@ -32,8 +31,33 @@ namespace Sklep
             string elementsCount = "";
             while (countReader.Read()) elementsCount = countReader["COUNT(*)"].ToString();
             countReader.Close();
+
+
+            
+                if (User != null)
+                {
+                    JObject koszykJSON = JObject.Parse("{}");
+                    command.CommandText = "select * from users where id='" + User + "'";
+                    MySqlDataReader readerKoszyk = command.ExecuteReader();
+                    while (readerKoszyk.Read())
+
+                    {
+                        koszykJSON = JObject.Parse(readerKoszyk["koszyk"].ToString());
+
+                    }
+                    readerKoszyk.Close();
+
+
+                    koszykArray = (JArray)koszykJSON["data"];
+                }
+               
+           
+           
+           
+
+
             command.CommandText = "select * from products";
-            MySqlDataReader reader2 = command.ExecuteReader();
+            MySqlDataReader readerProductsHomePage = command.ExecuteReader();
             int cellX = 0;
             int rowX = 0;
             int rowCount = Int32.Parse(elementsCount)/3;
@@ -46,95 +70,160 @@ namespace Sklep
                 tShop.Rows.Add(row);
             }
               
-            while (reader2.Read())
+            while (readerProductsHomePage.Read())
             {
 
                 if ((cellX % 3 == 0) && (cellX != 0)) rowX++;
 
+                bool warunek = false;
+                string ilosc = "";
+                try
+                {
+                    foreach (var item in koszykArray)
+                    {
+
+                        if (item["id"].ToString() == readerProductsHomePage["id"].ToString())
+                        {
+                            warunek = true;
+                            ilosc = item["ilosc"].ToString();
+                        }
+                    }
+                }
+                catch
+                {
+                    //Debug.WriteLine("Użytkownik nie jest zalogowany");
+                }
+              
+
                 TableCell cell = new TableCell();
 
                 Image photo = new Image();
-                photo.ImageUrl = "Images/" + reader2["image"].ToString();
+                photo.ImageUrl = "Images/" + readerProductsHomePage["image"].ToString();
                 photo.CssClass = "imgTable";
                 cell.Controls.Add(photo);
 
                 
                 Label name = new Label();
-                name.Text= reader2["name"].ToString();
+                name.Text= readerProductsHomePage["name"].ToString();
                 cell.Controls.Add(name);
 
                 Label price = new Label();
-                price.Text = reader2["price"].ToString();
+                price.Text = readerProductsHomePage["price"].ToString();
                 cell.Controls.Add(price);
 
                 Label description = new Label();
-                description.Text = reader2["description"].ToString();
+                description.Text = readerProductsHomePage["description"].ToString();
                 cell.Controls.Add(description);
 
                 DropDownList select = new DropDownList();
-                select.ID = "select/" + reader2["id"].ToString();
+                select.ID = "select/" + readerProductsHomePage["id"].ToString();
 
-                string choosen = "";
                 for (int i = 1; i <= 10; i++)
                 {
                     ListItem option = new ListItem();
                     option.Text = i.ToString();
                     option.Value = i.ToString();
+                    if (warunek && (i.ToString() == ilosc)) option.Selected = true;
                     select.Items.Add(option);
                 }
                 cell.Controls.Add(select);
 
                 Button addButton = new Button();
-                addButton.ID = "add" + reader2["id"].ToString();
+                addButton.ID = "add" + readerProductsHomePage["id"].ToString();
                 addButton.CausesValidation = false;
                 addButton.UseSubmitBehavior = false;
                 addButton.Text = "DODAJ DO KOSZYKA";
-                addButton.CommandName = "{ 'id':" + reader2["id"].ToString() + ",'cell':"+(cellX%3)+",'row':"+rowX+"}";
+                if (warunek) addButton.Text = "UAKTUALNIJ ILOŚĆ";
+                addButton.CommandName = "{ 'id':" + readerProductsHomePage["id"].ToString() + ",'cell':"+(cellX%3)+",'row':"+rowX+"}";
                 addButton.Click += new EventHandler(this.addButton_Click);
                 cell.Controls.Add(addButton);
 
-                cell.ID = "cell" + reader2["id"].ToString();
+                cell.ID = "cell" + readerProductsHomePage["id"].ToString();
                 
                 tShop.Rows[rowX].Cells.Add(cell);
                 cellX++;
 
 
             }
-            reader2.Close();
+            readerProductsHomePage.Close();
         }
         protected void addButton_Click(object sender, EventArgs e)
         {
-            Button bt = sender as Button;
-            JObject jsonObject = JObject.Parse(bt.CommandName);
-            int row = Int32.Parse(jsonObject["row"].ToString());
-            int cell = Int32.Parse(jsonObject["cell"].ToString());
-            DropDownList ddList = tShop.Rows[row].Cells[cell].Controls[4] as DropDownList;
-           string ilosc =  ddList.SelectedValue.ToString();
-
-            JObject koszykJSON = JObject.Parse("{}");
-            command.CommandText = "select * from users where id='" + User + "'";
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-
+            if (Session["name"] != null)
             {
-                koszykJSON = JObject.Parse(reader["koszyk"].ToString());
+                Button bt = sender as Button;
+                JObject jsonObject = JObject.Parse(bt.CommandName);
+                int row = Int32.Parse(jsonObject["row"].ToString());
+                int cell = Int32.Parse(jsonObject["cell"].ToString());
+                DropDownList ddList = tShop.Rows[row].Cells[cell].Controls[4] as DropDownList;
+                string ilosc = ddList.SelectedValue.ToString();
 
+                JObject koszykJSON = JObject.Parse("{}");
+                command.CommandText = "select * from users where id='" + User + "'";
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+
+                {
+                    koszykJSON = JObject.Parse(reader["koszyk"].ToString());
+
+                }
+                reader.Close();
+                JArray a = (JArray)koszykJSON["data"];
+                bool warunek = true;
+                foreach (var item in a)
+                {
+
+                    if (item["id"].ToString() == jsonObject["id"].ToString())
+                    {
+                        item["ilosc"] = ilosc;
+                        warunek = false;
+                    }
+                }
+
+                if (warunek)
+                {
+                    a.Add("{id:" + jsonObject["id"] + ",ilosc:" + ilosc + "}");
+                    koszykJSON["data"] = a;
+                }
+                
+                string wynik = koszykJSON.ToString();
+                wynik = wynik.Replace("\"", "");
+                command.CommandText = "UPDATE `users` SET `koszyk` = '" + wynik + "' WHERE `users`.`id` = " + User;
+                command.ExecuteNonQuery();
+                bt.Text = "UAKTUALNIJ ILOŚĆ";
             }
-            reader.Close();
-            string y = koszykJSON["data"].ToString();
-            /*
-            Array<JObject> x=y.ToArray<JObject>;
-            Debug.WriteLine(x);
+            else
+            {
+                Response.Redirect("Logowanie.aspx");
+            }
             
-            string wynik = koszykJSON.ToString();
-            wynik = wynik.Replace("\"", "");
-            Debug.WriteLine(wynik);
-            command.CommandText = "UPDATE `users` SET `koszyk` = '" + wynik + "' WHERE `users`.`id` = " + User;
-            command.ExecuteNonQuery();*/
-
+            
         }
 
+        protected void btRefresh_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlterowaniShop.aspx");
+        }
 
+        protected void btKoszyk_Click(object sender, EventArgs e)
+        {
+            if (Session["name"] != null)
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Panel_Klienta.aspx");
+            }
+            else
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Logowanie.aspx");
+            }
+        }
+
+        
     }
 }
 

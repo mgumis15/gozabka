@@ -30,12 +30,6 @@
             width:50px;
             height:50px;
         }
-        .auto-style3 {
-            height: 30px;
-        }
-        .auto-style4 {
-            height: 26px;
-        }
         td{
             width:20%;
         }
@@ -45,9 +39,12 @@
     <form id="form1" runat="server">
     <table class="auto-style1">
         <tr>
-            <td class="auto-style2">Strona Główna</td>
-            <td class="auto-style2">Koszyk</td>
-            <td class="auto-style2">Panel Klienta</td>
+            <td class="auto-style2">
+                <asp:Button ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" /></td>
+            <td class="auto-style2">
+                <asp:Button ID="btKoszyk" runat="server" Text="Koszyk" OnClick="btKoszyk_Click" /></td>
+            <td class="auto-style2">
+                <asp:Button ID="btKlient" runat="server" Text="Panel Klienta"  /></td>
         </tr>
         <tr>
             <td class="auto-style2"></td>

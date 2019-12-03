@@ -22,7 +22,12 @@ namespace Sklep
             connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
-            if(Session["id"]!=null) User = Session["id"].ToString();
+            if (Session["id"] != null)
+            {
+                User = Session["id"].ToString();
+                btWyloguj.Text = "Wyloguj się";
+            }
+
             getData();
         }
         protected void getData()
@@ -120,25 +125,34 @@ namespace Sklep
                 price.CssClass = "price";
                 cell.Controls.Add(price);
 
-                DropDownList select = new DropDownList();
-                select.ID = "select/" + readerProductsHomePage["id"].ToString();
-
-                for (int i = 1; i <= 10; i++)
+                if ((Session["type"] == null)||(Session["type"].ToString()!="admin"))
                 {
-                    ListItem option = new ListItem();
-                    option.Text = i.ToString();
-                    option.Value = i.ToString();
-                    if (warunek && (i.ToString() == ilosc)) option.Selected = true;
-                    select.Items.Add(option);
+                    DropDownList select = new DropDownList();
+                    select.ID = "select/" + readerProductsHomePage["id"].ToString();
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        ListItem option = new ListItem();
+                        option.Text = i.ToString();
+                        option.Value = i.ToString();
+                        if (warunek && (i.ToString() == ilosc)) option.Selected = true;
+                        select.Items.Add(option);
+                    }
+                    cell.Controls.Add(select);
                 }
-                cell.Controls.Add(select);
+               
 
                 Button addButton = new Button();
                 addButton.ID = "add" + readerProductsHomePage["id"].ToString();
                 addButton.CausesValidation = false;
                 addButton.UseSubmitBehavior = false;
+                
                 addButton.Text = "DODAJ DO KOSZYKA";
                 if (warunek) addButton.Text = "UAKTUALNIJ ILOŚĆ";
+                if (Session["type"] != null)
+                {
+                    if (Session["type"].ToString() == "admin") addButton.Text = "Modyfikuj produkt";
+                }
                 addButton.CommandName = "{ 'id':" + readerProductsHomePage["id"].ToString() + ",'cell':"+(cellX%3)+",'row':"+rowX+"}";
                 addButton.Click += new EventHandler(this.addButton_Click);
                 cell.Controls.Add(addButton);
@@ -156,7 +170,15 @@ namespace Sklep
         }
         protected void addButton_Click(object sender, EventArgs e)
         {
-            if (Session["name"] != null)
+            if (Session["type"] != null)
+            {
+
+            
+            if (Session["type"].ToString() != "admin")
+            {
+
+           
+                if (Session["name"] != null)
             {
                 Button bt = sender as Button;
                 JObject jsonObject = JObject.Parse(bt.CommandName);
@@ -203,23 +225,14 @@ namespace Sklep
             {
                 Response.Redirect("Logowanie.aspx");
             }
-            
-            
-        }
-
-        protected void btRefresh_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("AlterowaniShop.aspx");
-        }
-
-        protected void btKoszyk_Click(object sender, EventArgs e)
-        {
-            if (Session["name"] != null)
+            }
+            else
             {
                 command.Connection.Close();
                 connection.Close();
 
-                Response.Redirect("Panel_Klienta.aspx");
+                Response.Redirect("Products.aspx");
+            }
             }
             else
             {
@@ -230,8 +243,59 @@ namespace Sklep
             }
         }
 
-       
+        protected void btRefresh_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlterowaniShop.aspx");
+        }
 
+        protected void btKoszyk_Click(object sender, EventArgs e)
+        {
+            if (Session["type"] != null)
+            {
+                if (Session["type"].ToString() != "admin")
+                {
+                    if (Session["name"] != null)
+                    {
+                        command.Connection.Close();
+                        connection.Close();
+
+                        Response.Redirect("Panel_Klienta.aspx");
+                    }
+                    else
+                    {
+                        command.Connection.Close();
+                        connection.Close();
+
+                        Response.Redirect("Logowanie.aspx");
+                    }
+                }
+                else
+                {
+                    command.Connection.Close();
+                    connection.Close();
+
+                    Response.Redirect("Products.aspx");
+                }
+            }
+            else
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Logowanie.aspx");
+            }
+            
+        }
+
+        protected void btWyloguj_Click(object sender, EventArgs e)
+
+        {
+            Session["name"] = null;
+            Session["id"] = null;
+            Session["type"] = null;
+            Response.Redirect("Logowanie.aspx");
+
+        }
     }
 }
 

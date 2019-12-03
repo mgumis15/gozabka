@@ -204,5 +204,13 @@ namespace Sklep
                 Response.Redirect("Logowanie.aspx");
             }
         }
+
+        protected void btWyloguj_Click(object sender, EventArgs e)
+        {
+            Session["name"] = null;
+            Session["id"] = null;
+            Session["type"] = null;
+            Response.Redirect("Logowanie.aspx");
+        }
     }
 }

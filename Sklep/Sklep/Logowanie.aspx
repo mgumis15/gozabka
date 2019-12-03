@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/indeks.jpg" />
     <title></title>
 
     <style type="text/css">
@@ -127,12 +128,11 @@
                    <asp:Button CssClass="menubtn" ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" />
                    </td>
                 <td class="menu" >
-                    <h1 > <a style="border:none;display:flex;flex-direction:row;align-items:center;justify-content:space-around;" ><asp:Button CssClass="menubtn" ID="btKoszyk" runat="server" Text="Panel Klienta " OnClick="btKoszyk_Click" /><img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
+                    <h1 > &nbsp;</h1>
                 </td>
                                 <td class="menu" >
                     <h1 >
-                        <asp:Button cssClass="menubtn" ID="btWyloguj" runat="server" Text="Wyloguj" />
-                                    </h1>
+                        &nbsp;</h1>
                 </td>
 
 
@@ -178,10 +178,10 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td class="auto-style6">
-                    <asp:Label CssClass="aspLabel" ID="lName" runat="server" Text="Nazwa" Visible="False"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lName" runat="server" Text="Nazwa" Visible="True"></asp:Label>
                 </td>
                 <td class="auto-style9">
-                    <asp:TextBox ID="tbName" runat="server" CssClass="aspTextBox" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="tbName" runat="server" CssClass="aspTextBox" Visible="True"></asp:TextBox>
                 </td>
                 <td>
                     <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="tbName" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
@@ -195,11 +195,11 @@
                 <td class="auto-style4"></td>
                 <td class="auto-style4"></td>
                 <td class="auto-style7">
-                    <asp:Label ID="lPassword" CssClass="aspLabel" runat="server" Text="Hasło" Visible="False"></asp:Label>
+                    <asp:Label ID="lPassword" CssClass="aspLabel" runat="server" Text="Hasło" Visible="True"></asp:Label>
                 </td>
                 <td class="auto-style10">
-                     <asp:TextBox ID="tbPassword" runat="server" CssClass="aspTextBox" CausesValidation="True" Visible="False" TextMode="Password"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków i musi być złożone" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$">*</asp:RegularExpressionValidator>
+                     <asp:TextBox ID="tbPassword" runat="server" CssClass="aspTextBox" CausesValidation="True" Visible="True" TextMode="Password"></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="revPass" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Hasło nie może zawierać białych znaków i musi być złożone" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$" Enabled="False">*</asp:RegularExpressionValidator>
                 </td>
                 <td class="auto-style4">
                     <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="tbPassword" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
@@ -219,8 +219,8 @@
                 <td class="auto-style9"> <asp:TextBox ID="tbRepPass" CssClass="aspTextBox" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
                     </td>
                 <td>
-                    <asp:RequiredFieldValidator ID="rfvRepPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="cvPassMatch" runat="server" ControlToValidate="tbRepPass" ErrorMessage="Hasła nie są identyczne" ForeColor="Red" OnServerValidate="cvPassMatch_ServerValidate">*</asp:CustomValidator></td>
+                    <asp:RequiredFieldValidator ID="rfvRepPass" runat="server" ControlToValidate="tbRepPass" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True" Enabled="False">*</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="cvPassMatch" runat="server" ControlToValidate="tbRepPass" ErrorMessage="Hasła nie są identyczne" ForeColor="Red" OnServerValidate="cvPassMatch_ServerValidate" Enabled="False">*</asp:CustomValidator></td>
                 <td>
                     &nbsp;</td>
                 <td>
@@ -237,9 +237,9 @@
                     <asp:TextBox ID="tbMail" CssClass="aspTextBox" runat="server" Visible="False" ></asp:TextBox>
                 </td>
                 <td>
-                    <asp:RequiredFieldValidator ID="rfvMail" runat="server" ControlToValidate="tbMail" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="tbMail" ErrorMessage="To nie jest prawidłowy adres email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
-                    <asp:HiddenField ID="hdLogRes" runat="server" Value="1"  />
+                    <asp:RequiredFieldValidator ID="rfvMail" runat="server" ControlToValidate="tbMail" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True" Enabled="False">*</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="tbMail" ErrorMessage="To nie jest prawidłowy adres email" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" Enabled="False">*</asp:RegularExpressionValidator>
+                    <asp:HiddenField ID="hdLogRes" runat="server" Value="0"  />
                 </td>
                 <td>
                     &nbsp;</td>
@@ -253,7 +253,7 @@
                     <asp:Label ID="lInfo" CssClass="aspLabel" runat="server"></asp:Label>
                 </td>
                 <td style="text-align:center;" class="auto-style9">
-                    <asp:Button ID="bDoLogOrReg" CssClass="aspButton" runat="server" Text="Zarejestruj się" OnClick="bDoLogOrReg_Click" Visible="False" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="2px" />
+                    <asp:Button ID="bDoLogOrReg" CssClass="aspButton" runat="server" Text="Zaloguj się" OnClick="bDoLogOrReg_Click" Visible="True" BackColor="Black" BorderColor="White" BorderStyle="Solid" BorderWidth="2px" />
                 </td>
                 <td>
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="White" />

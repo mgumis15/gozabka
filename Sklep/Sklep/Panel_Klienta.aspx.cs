@@ -261,7 +261,7 @@ namespace Sklep
             {
                 message = new MailMessage("Alterowani.Shop@gmail.com", tbMail.Text);
                 message.Subject = "Zmiana danych w serwisie Alterowani Shop";
-                message.Body = "Witaj " + tbName.Text + ". Twoje dane zostały pomyślnie zmienione. Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy  logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu!";
+                message.Body = "Witaj " + tbName.Text + ". Twoje dane zostały pomyślnie zmienione. Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy następnym logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu!  Jeżeli nie zmieniałeś/łaś swoich danych, niezwłocznie skontaktuj się z naszym doradcą poprzez ten adres mailowy: Alterowani.Shop@gmail.com";
 
                 client = new SmtpClient("smtp.gmail.com", 587);
                 client.UseDefaultCredentials = false;
@@ -270,7 +270,7 @@ namespace Sklep
 
 
                 client.Send(message);
-                lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
+                lInfo.Text = "Wysłano wiadomość na podany adres email. Przy ponownym zalogowaniu podaj kod autoryzacyjny z maila.";
 
 
                 /*
@@ -403,7 +403,7 @@ namespace Sklep
                     {
                         message = new MailMessage("Alterowani.Shop@gmail.com",reader["email"].ToString());
                         message.Subject = "Zmiana hasła w serwisie Alterowani Shop";
-                        message.Body = "Witaj " + reader["name"].ToString() + ". Twoje hasło zostało pomyślnie zmienione. Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu!";
+                        message.Body = "Witaj " + reader["name"].ToString() + ". Twoje hasło zostało pomyślnie zmienione. Twój kod weryfikacyjny to: " + authCode + ". Użyj tego kodu przy następnym logowaniu się do naszego sklepu, aby potwierdzić swoją tożsamość. Dziękujemy za wybór naszego sklepu! Jeżeli nie zmieniałeś/łaś swojego hasła, niezwłocznie skontaktuj się z naszym doradcą poprzez ten adres mailowy: Alterowani.Shop@gmail.com";
 
                         client = new SmtpClient("smtp.gmail.com", 587);
                         client.UseDefaultCredentials = false;
@@ -411,17 +411,17 @@ namespace Sklep
                         client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
 
                         client.Send(message);
-                        lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
+                        lInfo.Text = "Wysłano wiadomość na podany adres email. Przy ponownym zalogowaniu podaj kod autoryzacyjny z maila.";
+                        /*
                         System.Timers.Timer aTimer = new System.Timers.Timer(5000);
                         aTimer.Elapsed += (Object source, System.Timers.ElapsedEventArgs ef)=>{
-                            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAA");
                             Session["name"] = null;
                             Session["id"] = null;
                             Session["type"] = null;
                         };
                         aTimer.AutoReset = false;
                         aTimer.Enabled = true;
-
+                        */
                         
                     }
                     catch (Exception ex)
@@ -442,7 +442,7 @@ namespace Sklep
                 command.ExecuteNonQuery();
             }
 
-
+            /*
              void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs ef)
             {
                 Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -451,6 +451,7 @@ namespace Sklep
                 Session["type"] = null;
                 Response.Redirect("Logowanie.aspx");
             }
+            */
         }
         protected void btRefresh_Click(object sender, EventArgs e)
         {
@@ -475,6 +476,12 @@ namespace Sklep
             }
         }
 
-
+        protected void btWyloguj_Click(object sender, EventArgs e)
+        {
+            Session["name"] = null;
+            Session["id"] = null;
+            Session["type"] = null;
+            Response.Redirect("Logowanie.aspx");
+        }
     }
 }

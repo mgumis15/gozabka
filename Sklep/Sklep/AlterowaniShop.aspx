@@ -7,6 +7,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
     <style type="text/css">
+        .menuTab{
+            width:100%;
+            background-color:black;
+        }
+        h1{
+            text-align:center;
+        }
+        body{
+            background-color:black;
+        }
+        a{
+            text-decoration:none;
+            text-align:center;
+            color:white;
+            background-color:black;
+            display:block;
+            border:2px solid white;
+            border-radius:100px;
+            width:60%;
+            margin:0 auto;
+            padding:10px;
+
+        }
+        .menu{
+            width:25%;
+        }
+        .aspTextBox{
+            width:100%;
+            background-color:#191717;
+            border:1px solid white;
+            border-radius:10px;
+            text-align:center;
+            color:white;
+            height:50px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
         .auto-style1 {
             width: 100%;
             height: 432px;
@@ -14,17 +51,66 @@
         .auto-style2 {
             height: 23px;
         }
-        td{
-            width:33.3%;
-            text-align:center;
-            heigth:auto;
+        #pozycjonowanie{
+            display:flex;
+            width:40%;
+            height:90%;
+            flex-direction:column;
+            justify-content:space-between;
+            align-items:center;
+            float:right;
+
         }
         #tShop{
-            border:1px solid black;
-            padding:5px;
+            width:100%;
+           
+            
         }
         #tShop td{
-            border:1px solid black;
+            
+            border:1px solid white;
+            border-radius:10px;
+            margin:10px;
+            width:80%;
+            height:400px;
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            align-items:center;
+            background-color:black;
+            color:white;
+            margin:0 auto;
+            margin-bottom:10px;
+        }
+
+        #tShop td img{
+            height:80%;
+            width:auto;
+            margin:30px;
+            
+
+        }
+        #tShop td select{
+            background-color:grey;
+            border:1px solid white;
+            width:50px;
+            height:30px;
+            color:white;
+margin:20px;
+
+        }
+        #tShop td input{
+            width:150px;
+            background-color:#191717;
+            border:1px solid white;
+            border-radius:10px;
+            text-align:center;
+            color:white;
+            height:40px;
+            margin:20px;
+
+
+
         }
         .imgTable{
             width:50px;
@@ -33,25 +119,52 @@
         td{
             width:20%;
         }
+        .Title{
+            font-size:25px;
+            color:white;
+            text-align:center;
+            text-decoration:underline;
+
+        }
+        .desc{
+            font-size:18px;
+            color:white;
+            text-align:center;
+           
+        }
+        .price{
+            color:white;
+            font-size:25px;
+            text-align:center;
+        }
+        .auto-style3 {
+            width: 357px;
+            height: 80px;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <table class="auto-style1">
-        <tr>
-            <td class="auto-style2">
-                <asp:Button ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" /></td>
-            <td class="auto-style2">
-                <asp:Button ID="btKoszyk" runat="server" Text="Koszyk" OnClick="btKoszyk_Click" /></td>
-            <td class="auto-style2">
-                <asp:Button ID="btKlient" runat="server" Text="Panel Klienta"  /></td>
-        </tr>
-        <tr>
-            <td class="auto-style2"></td>
-            <td id="cont" class="auto-style2"></td>
-            <td class="auto-style2"></td>
-        </tr>
+        <table class="menuTab">
+            <tr>
+                <td class="menu">
+
+                    <img alt="logo" class="auto-style3" src="/Images/logo.png" /></td>
+
+                <td class="menu">
+                    <h1><a href="/AlterowaniShop.aspx">Strona Główna</a></h1>
+                   </td>
+                <td class="menu" >
+                    <h1 > <a style="display:flex;flex-direction:row;align-items:center;justify-content:space-around;" href="/Panel_Klienta.aspx">Panel Klienta<img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
+                </td>
+                                <td class="menu" >
+                    <h1 > <a  href="/Logowanie.aspx">Wyloguj</a></h1>
+                </td>
+
+
+            </tr>
         </table>
+
         <asp:Table ID="tShop" runat="server">
         </asp:Table>
     </form>

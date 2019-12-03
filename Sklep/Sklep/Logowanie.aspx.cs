@@ -75,13 +75,14 @@ namespace Sklep
             var authCheck = 0;
             if (tbAuth.Visible)
             {
-                
+
                 MySqlCommand command = connection.CreateCommand();
                 command.CommandText = "select * from users where name='" + tbName.Text + "'";
                 MySqlDataReader reader2 = command.ExecuteReader();
                 while (reader2.Read())
 
                 {
+                    Debug.WriteLine(reader2["authorizationCode"]);
                     if (tbAuth.Text == reader2["authorizationCode"].ToString())
                     {
                         authCheck = 1;
@@ -91,7 +92,7 @@ namespace Sklep
                     {
 
                         lInfo.Visible = true;
-                        lInfo.Text = "Podano błędny kod autoryzacyjne. Wprowadź kod ponownie";
+                        lInfo.Text = "Podano błędny kod autoryzacyjny. Wprowadź kod ponownie";
                         tbAuth.Text = "";
                     }
                 }
@@ -111,8 +112,10 @@ namespace Sklep
 
                 if (hdLogRes.Value == "1")
                 {
+                    Debug.WriteLine("wszedłem do rejestrowania");
                     if (Page.IsValid)
                     {
+                        Debug.WriteLine("rejestrowane zwalidowane");
                         MySqlCommand command = connection.CreateCommand();
                         command.CommandText = "select * from users";
                         MySqlDataReader reader = command.ExecuteReader();
@@ -132,38 +135,35 @@ namespace Sklep
                             //wysylanie maila
                             int authCode = MailAuthSender(tbMail.Text, tbName.Text);
                             string outputVal = Encode(tbPassword.Text);
-                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`,'koszyk') VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user','{data:[]}');";
+                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user');";
                             command.ExecuteNonQuery();
                         }
                     }
                 }
                 else
                 {
+                    Debug.WriteLine("wszedłem do logowania");
                     command.CommandText = "select * from users";
                     MySqlDataReader reader = command.ExecuteReader();
-                    bool warunek = false;
-                    string nameS = "";
-                    string idS = "";
-                    string typeS = "";
                     while (reader.Read())
                     {
+                        Debug.WriteLine("coś się prawie dzieje");
                         if (reader["name"].ToString() == tbName.Text)
                         {
+                            Debug.WriteLine("coś się dzieje");
                             string outputVal = Encode(tbPassword.Text);
                             if (outputVal == reader["password"].ToString())
                             {
+                                Debug.WriteLine("kodzik:");
+                                Debug.WriteLine(reader["authorized"].ToString());
 
 
                                 if (reader["authorized"].ToString() == "True")
                                 {
 
+                                    Debug.WriteLine("działa na pewno");
                                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
                                     //e.Authenticated = true;
-                                    nameS = reader["name"].ToString();
-                                    idS = reader["id"].ToString();
-                                    typeS = reader["type"].ToString();
-                                    warunek = true;
-                                    
 
                                 }
                                 else
@@ -174,23 +174,12 @@ namespace Sklep
                                     lPassword.Visible = false;
                                     rfvPassword.Enabled = false;
                                     revPass.Enabled = false;
-                                    tbName.Enabled = false;  
+                                    tbName.Enabled = false;
                                 }
                             }
                         }
                     }
                     reader.Close();
-                    if (warunek)
-                    {
-                        command.Connection.Close();
-                        connection.Close();
-
-
-                        Session["name"] = nameS;
-                        Session["id"] = idS;
-                        Session["type"] = typeS;
-                        Response.Redirect("AlterowaniShop.aspx");
-                    }
 
 
 

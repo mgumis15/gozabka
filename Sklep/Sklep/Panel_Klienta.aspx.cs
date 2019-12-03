@@ -452,6 +452,28 @@ namespace Sklep
                 Response.Redirect("Logowanie.aspx");
             }
         }
+        protected void btRefresh_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlterowaniShop.aspx");
+        }
+
+        protected void btKoszyk_Click(object sender, EventArgs e)
+        {
+            if (Session["name"] != null)
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Panel_Klienta.aspx");
+            }
+            else
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Logowanie.aspx");
+            }
+        }
 
 
     }

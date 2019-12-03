@@ -52,11 +52,9 @@
             justify-content:space-between;
             align-items:center;
             float:right;
-
         }
         #tShop{
             width:100%;
-           
             
         }
         #tShop td{
@@ -138,6 +136,20 @@
         .auto-style4 {
             width: 100%;
         }
+        .menubtn{
+            text-decoration:none;
+            text-align:center;
+            color:white;
+            background-color:black;
+            display:block;
+            border:2px solid white;
+            border-radius:100px;
+            width:200px;
+            margin:0 auto;
+            padding:10px;
+            font-size:25px;
+            font-weight:bold;
+        }
     </style>
     
 </head>
@@ -150,26 +162,24 @@
                     <img alt="logo" class="auto-style3" src="/Images/logo.png" /></td>
 
                 <td class="menu">
-                    <h1><a href="/AlterowaniShop.aspx">Strona Główna</a></h1>
+                   <asp:Button CssClass="menubtn" ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" />
                    </td>
                 <td class="menu" >
-                    <h1 > <a style="display:flex;flex-direction:row;align-items:center;justify-content:space-around;" href="/Panel_Klienta.aspx">Panel Klienta<img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
+                    <h1 > <a style="border:none;display:flex;flex-direction:row;align-items:center;justify-content:space-around;"><asp:Button CssClass="menubtn" ID="btKoszyk" runat="server" Text="Panel Klienta " OnClick="btKoszyk_Click" /><img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
                 </td>
                                 <td class="menu" >
-                    <h1 > <a  href="/Logowanie.aspx" >Wyloguj</a></h1>
+
+                    <h1 >
+                        <asp:Button cssClass="menubtn" ID="btWyloguj" runat="server" Text="Wyloguj" />
+                                    </h1>
+
                 </td>
 
 
             </tr>
 
         </table>
-            <table class="auto-style4">
-        <tr>
-            <td><asp:Button ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" /></td>
-            <td><asp:Button ID="btKoszyk" runat="server" Text="Koszyk" OnClick="btKoszyk_Click" /></td>
-            <td><asp:Button ID="btKlient" runat="server" Text="Panel Klienta"  /></td>
-        </tr>
-    </table>
+       
         <asp:Table ID="tShop" runat="server">
         </asp:Table>
     </form>

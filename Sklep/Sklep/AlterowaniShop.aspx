@@ -44,14 +44,7 @@
             margin-top:10px;
             margin-bottom:10px;
         }
-        .auto-style1 {
-            width: 100%;
-            height: 432px;
-        }
-        .auto-style2 {
-            height: 23px;
-        }
-        #pozycjonowanie{
+        .pozycjonowanie{
             display:flex;
             width:40%;
             height:90%;
@@ -96,7 +89,7 @@
             width:50px;
             height:30px;
             color:white;
-margin:20px;
+            margin:20px;
 
         }
         #tShop td input{
@@ -133,6 +126,7 @@ margin:20px;
            
         }
         .price{
+            margin-top:100px;
             color:white;
             font-size:25px;
             text-align:center;
@@ -140,6 +134,9 @@ margin:20px;
         .auto-style3 {
             width: 357px;
             height: 80px;
+        }
+        .auto-style4 {
+            width: 100%;
         }
     </style>
     
@@ -164,10 +161,18 @@ margin:20px;
 
 
             </tr>
-        </table>
 
+        </table>
+            <table class="auto-style4">
+        <tr>
+            <td><asp:Button ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" /></td>
+            <td><asp:Button ID="btKoszyk" runat="server" Text="Koszyk" OnClick="btKoszyk_Click" /></td>
+            <td><asp:Button ID="btKlient" runat="server" Text="Panel Klienta"  /></td>
+        </tr>
+    </table>
         <asp:Table ID="tShop" runat="server">
         </asp:Table>
     </form>
+
 </body>
 </html>

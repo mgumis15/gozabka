@@ -103,24 +103,22 @@ namespace Sklep
                 photo.CssClass = "imgTable";
                 cell.Controls.Add(photo);
 
-                HtmlGenericControl divItem = new HtmlGenericControl("div");
-                divItem.ID = "pozycjonowanie";
 
-
+                
                 Label name = new Label();
                 name.Text= readerProductsHomePage["name"].ToString();
                 name.CssClass = "Title";
-                divItem.Controls.Add(name);
+                cell.Controls.Add(name);
 
                 Label description = new Label();
                 description.Text = readerProductsHomePage["description"].ToString();
                 description.CssClass = "desc";
-                divItem.Controls.Add(description);
+                cell.Controls.Add(description);
 
                 Label price = new Label();
                 price.Text = readerProductsHomePage["price"].ToString() + " zł";
                 price.CssClass = "price";
-                divItem.Controls.Add(price);
+                cell.Controls.Add(price);
 
                 DropDownList select = new DropDownList();
                 select.ID = "select/" + readerProductsHomePage["id"].ToString();
@@ -133,7 +131,7 @@ namespace Sklep
                     if (warunek && (i.ToString() == ilosc)) option.Selected = true;
                     select.Items.Add(option);
                 }
-                divItem.Controls.Add(select);
+                cell.Controls.Add(select);
 
                 Button addButton = new Button();
                 addButton.ID = "add" + readerProductsHomePage["id"].ToString();
@@ -143,9 +141,9 @@ namespace Sklep
                 if (warunek) addButton.Text = "UAKTUALNIJ ILOŚĆ";
                 addButton.CommandName = "{ 'id':" + readerProductsHomePage["id"].ToString() + ",'cell':"+(cellX%3)+",'row':"+rowX+"}";
                 addButton.Click += new EventHandler(this.addButton_Click);
-                divItem.Controls.Add(addButton);
+                cell.Controls.Add(addButton);
 
-                cell.Controls.Add(divItem);
+               
 
                 cell.ID = "cell" + readerProductsHomePage["id"].ToString();
                 
@@ -232,7 +230,8 @@ namespace Sklep
             }
         }
 
-        
+       
+
     }
 }
 

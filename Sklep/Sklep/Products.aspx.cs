@@ -149,28 +149,34 @@ namespace Sklep
                 TableRow row = new TableRow();
 
                 TableCell cellID = new TableCell();
+                cellID.CssClass = "ajdi";
                 cellID.Text = reader["id"].ToString();
                 row.Cells.Add(cellID);
 
                 TableCell cellName = new TableCell();
+                cellName.CssClass = "Title";
                 cellName.Text = reader["name"].ToString();
                 row.Cells.Add(cellName);
 
                 TableCell cellPrice = new TableCell();
+                cellPrice.CssClass = "price";
                 cellPrice.Text = reader["price"].ToString();
                 row.Cells.Add(cellPrice);
 
                 TableCell cellDescription = new TableCell();
+                cellDescription.CssClass = "aspLabel";
                 cellDescription.Text = reader["description"].ToString();
                 row.Cells.Add(cellDescription);
 
                 TableCell cellPhoto = new TableCell();
+                cellPhoto.CssClass = "photo";
                 cellPhoto.Text = string.Format("<img src='Images/" + reader["image"] + "' class='imgTable'/>");
                 row.Cells.Add(cellPhoto);
                 images.Add(reader["image"].ToString());
 
 
                 Button delButton = new Button();
+                delButton.CssClass = "aspButton";
                 delButton.ID = "delete" + reader["id"].ToString();
                 delButton.CausesValidation = false;
                 delButton.UseSubmitBehavior = false;
@@ -182,6 +188,7 @@ namespace Sklep
                 row.Cells.Add(cellDelButt);
 
                 Button modButton = new Button();
+                modButton.CssClass = "aspButton";
                 modButton.ID = "mod" + reader["id"].ToString();
                 modButton.CausesValidation = false;
                 modButton.UseSubmitBehavior = false;
@@ -311,6 +318,28 @@ namespace Sklep
             else
             {
 
+            }
+        }
+        protected void btRefresh_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlterowaniShop.aspx");
+        }
+
+        protected void btKoszyk_Click(object sender, EventArgs e)
+        {
+            if (Session["name"] != null)
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Panel_Klienta.aspx");
+            }
+            else
+            {
+                command.Connection.Close();
+                connection.Close();
+
+                Response.Redirect("Logowanie.aspx");
             }
         }
     }

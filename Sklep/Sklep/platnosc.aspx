@@ -28,11 +28,137 @@
         .radio{
             position:relative;
         }
+                body{
+            background-color:black;
+        }
+        .aspButton{
+            color:white;
+            background-color:black;
+            border:2px solid black;
+            border-radius:5px;
+            padding:10px;
+            width:120px;
+            text-align:center;
+            font-size:15px;
+            font-weight:bold;
+        }
+        .aspLabel{
+            color:white;
+        }
+        
+        .menuTab{
+            width:100%;
+            background-color:black;
+        }
+        h1{
+            text-align:center;
+        }
+        a{
+            text-decoration:none;
+            text-align:center;
+            color:white;
+            background-color:black;
+            display:block;
+            border:2px solid white;
+            border-radius:100px;
+            width:60%;
+            margin:0 auto;
+            padding:10px;
 
+        }
+        .aspTextBox{
+            width:100%;
+            background-color:#191717;
+            border:1px solid white;
+            border-radius:10px;
+            text-align:center;
+            color:white;
+            height:50px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        .auto-style1 {
+            width: 100%;
+        }
+        td{
+           align-items:flex-end;
+        }
+        .auto-style3 {
+            height: 30px;
+        }
+        .auto-style4 {
+            height: 26px;
+        }
+        .auto-style5 {
+            height: 30px;
+            width: 232px;
+        }
+        .auto-style6 {
+            width: 232px;
+        }
+        .auto-style7 {
+            height: 26px;
+            width: 232px;
+        }
+        .auto-style8 {
+            height: 30px;
+            width: 333px;
+        }
+        .auto-style9 {
+            width: 333px;
+        }
+        .auto-style10 {
+            height: 26px;
+            width: 333px;
+        }
+        .menu{
+            width:25%;
+        }
+
+        .auto-style13 {
+            height: 79px;
+            width: 359px;
+        }
+                .menubtn{
+            text-decoration:none;
+            text-align:center;
+            color:white;
+            background-color:black;
+            display:block;
+            border:2px solid white;
+            border-radius:100px;
+            width:200px;
+            margin:0 auto;
+            padding:10px;
+            font-size:25px;
+            font-weight:bold;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
+        <table class="menuTab">
+            <tr>
+                <td class="menu">
+
+                    <img alt="logo" class="auto-style13" src="/Images/logo.png" /></td>
+
+                <td class="menu">
+                   <asp:Button CssClass="menubtn" ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" />
+                   </td>
+                <td class="menu" >
+                    <h1 > <a style="border:none;display:flex;flex-direction:row;align-items:center;justify-content:space-around;"><asp:Button CssClass="menubtn" ID="btKoszyk" runat="server" Text="Panel Klienta " OnClick="btKoszyk_Click" /><img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
+                </td>
+                                <td class="menu" >
+                    <h1 >
+                        <asp:Button cssClass="menubtn" ID="btWyloguj" runat="server" Text="Wyloguj" />
+                                    </h1>
+                </td>
+
+
+            </tr>
+
+        </table>
         <table class="auto-style1">
             <tr>
                 <td>&nbsp;</td>

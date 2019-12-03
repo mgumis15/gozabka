@@ -72,19 +72,23 @@ namespace Sklep
                             TableRow row = new TableRow();
 
                             TableCell cellID = new TableCell();
+                            cellID.CssClass = "aspLabel";
                             cellID.Text = x.ToString();
                             row.Cells.Add(cellID);
 
                             TableCell cellName = new TableCell();
+                            cellName.CssClass = "aspLabel";
                             cellName.Text = reader2["name"].ToString();
                             row.Cells.Add(cellName);
                             kosz += reader2["name"].ToString() + ", ";
 
                             TableCell cellPrice = new TableCell();
+                            cellPrice.CssClass = "aspLabel";
                             cellPrice.Text = reader2["price"].ToString();
                             row.Cells.Add(cellPrice);
 
                             TableCell cellDescription = new TableCell();
+                            cellDescription.CssClass = "aspLabel";
                             cellDescription.Text = reader2["description"].ToString();
                             row.Cells.Add(cellDescription);
 

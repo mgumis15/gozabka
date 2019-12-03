@@ -27,9 +27,9 @@
         }
         .radio{
             position:relative;
+            text-align:center;
         }
-                body{
-            background-color:black;
+              
         }
         .aspButton{
             color:white;
@@ -37,7 +37,7 @@
             border:2px solid black;
             border-radius:5px;
             padding:10px;
-            width:120px;
+            width:180px;
             text-align:center;
             font-size:15px;
             font-weight:bold;
@@ -133,6 +133,16 @@
             font-size:25px;
             font-weight:bold;
         }
+                body{
+                    background-color:black;
+                }
+                #rbPlatnosc{
+                    margin:0 auto;
+                }
+                img{
+                     width:50px;
+                    height:50px;
+                }
     </style>
 </head>
 <body>
@@ -163,14 +173,14 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Label ID="lTitle" runat="server" Text="Potwierdzenie zamówienia"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lTitle" runat="server" Text="Potwierdzenie zamówienia"></asp:Label>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style2"></td>
                 <td class="auto-style2">
-                    <asp:Label ID="lKoszyk" runat="server"></asp:Label>
+                    <asp:Label ID="lKoszyk" CssClass="aspLabel" runat="server"></asp:Label>
                 </td>
                 <td class="auto-style2"></td>
             </tr>
@@ -179,7 +189,7 @@
 
                 </td>
                 <td>&nbsp;
-                                    <asp:Table ID="tKoszyk" runat="server">
+                <asp:Table ID="tKoszyk" runat="server">
                 </asp:Table>
                 </td>
                 <td>
@@ -188,50 +198,50 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lImie" runat="server" Text="Imię:"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lImie" runat="server" Text="Imię:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbImie" runat="server"></asp:TextBox>
+                    <asp:TextBox  CssClass="aspTextBox" ID="tbImie" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvImie" runat="server" ControlToValidate="tbImie" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lNazwisko" runat="server" Text="Nazwisko:"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lNazwisko" runat="server" Text="Nazwisko:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbNazwisko" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="tbNazwisko" CssClass="aspTextBox" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvNazwisko" runat="server" ControlToValidate="tbNazwisko" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lAdres" runat="server" Text="Adres (ulica, numer domu):"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lAdres" runat="server" Text="Adres (ulica, numer domu):"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbAdres" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="tbAdres" CssClass="aspTextBox" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvAdres" runat="server" ControlToValidate="tbAdres" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lmiejscowosc" runat="server" Text="Miejsowość:"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lmiejscowosc" runat="server" Text="Miejsowość:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbMiejscowosc" runat="server"></asp:TextBox>
+                    <asp:TextBox CssClass="aspTextBox" ID="tbMiejscowosc" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvMiejscowosc" runat="server" ControlToValidate="tbMiejscowosc" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="lKod" runat="server" Text="Kod Pocztowy:"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lKod" runat="server" Text="Kod Pocztowy:"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="tbKod" runat="server"></asp:TextBox>
+                    <asp:TextBox CssClass="aspTextBox" ID="tbKod" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvKod" runat="server" ControlToValidate="tbKod" ErrorMessage="To pole jest wymagane" ForeColor="Red" SetFocusOnError="True">*</asp:RequiredFieldValidator>
                 </td>
                 <td>&nbsp;</td>
@@ -239,14 +249,14 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Label ID="lDostawa" runat="server" Text="Wybierz rodzaj dostawy"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lDostawa" runat="server" Text="Wybierz rodzaj dostawy"></asp:Label>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="radio">
-                    <asp:RadioButtonList ID="rbDostawa" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbDostawa_SelectedIndexChanged">
+                    <asp:RadioButtonList ID="rbDostawa" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbDostawa_SelectedIndexChanged" BackColor="Black" CssClass="aspLabel">
                         <asp:ListItem Value="20">Kurier (płatność z góry)<div class="ceny">20zł</div></asp:ListItem>
                         <asp:ListItem Value="25">Kurier (płatność pobraniowa)<div class="ceny">25zł</div></asp:ListItem>
                         <asp:ListItem Value="13">Poczta Polska<div class="ceny">13zł</div></asp:ListItem>
@@ -260,14 +270,14 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Label ID="lPlatnosc" runat="server" Text="Wybierz metodę płatności"></asp:Label>
+                    <asp:Label ID="lPlatnosc" CssClass="aspLabel" runat="server" Text="Wybierz metodę płatności"></asp:Label>
                 </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="radio">
-                    <asp:RadioButtonList ID="rbPlatnosc" runat="server" AutoPostBack="True">
+                    <asp:RadioButtonList ID="rbPlatnosc" runat="server" AutoPostBack="True" BackColor="Black" CssClass="aspLabel">
                         <asp:ListItem Value="SPrzelew">Szybki Przelew</asp:ListItem>
                         <asp:ListItem Value="PTradycyjny">Przelew Tradycyjny</asp:ListItem>
                         <asp:ListItem Value="PBLIK">Przelew BLIK</asp:ListItem>
@@ -280,13 +290,13 @@
             </tr>
             <tr>
                 <td>
-                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" BackColor="Black" ForeColor="White" />
                 </td>
                 <td>
-                    <asp:Button ID="btKup" runat="server" Text="Złóż zamówienie" OnClick="btKup_Click" />
+                    <asp:Button CssClass="aspButton" ID="btKup" runat="server" Text="Złóż zamówienie" OnClick="btKup_Click" />
                 </td>
                 <td>
-                    <asp:Label ID="lInfo" runat="server"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lInfo" runat="server"></asp:Label>
                 </td>
             </tr>
         </table>

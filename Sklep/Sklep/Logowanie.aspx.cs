@@ -27,6 +27,9 @@ namespace Sklep
             connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
             connection.Open();
             command = connection.CreateCommand();
+            Session["name"] = null;
+            Session["id"] = null;
+            Session["type"] = null;
         }
 
         protected void bLogin_Click(object sender, EventArgs e)
@@ -199,7 +202,15 @@ namespace Sklep
                         Session["name"] = nameS;
                         Session["id"] = idS;
                         Session["type"] = typeS;
-                        Response.Redirect("AlterowaniShop.aspx");
+                        if (Session["type"].ToString() == "admin")
+                        {
+                            Response.Redirect("Products.aspx");
+                        }
+                        else
+                        {
+                            Response.Redirect("AlterowaniShop.aspx");
+                        }
+                        
                     }
 
 

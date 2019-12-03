@@ -159,7 +159,7 @@ margin:20px;
                     <h1 > <a style="display:flex;flex-direction:row;align-items:center;justify-content:space-around;" href="/Panel_Klienta.aspx">Panel Klienta<img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
                 </td>
                                 <td class="menu" >
-                    <h1 > <a  href="/Logowanie.aspx">Wyloguj</a></h1>
+                    <h1 > <a  href="/Logowanie.aspx" >Wyloguj</a></h1>
                 </td>
 
 

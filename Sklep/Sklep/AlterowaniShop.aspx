@@ -168,9 +168,11 @@
                     <h1 > <a style="border:none;display:flex;flex-direction:row;align-items:center;justify-content:space-around;"><asp:Button CssClass="menubtn" ID="btKoszyk" runat="server" Text="Panel Klienta " OnClick="btKoszyk_Click" /><img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
                 </td>
                                 <td class="menu" >
+
                     <h1 >
                         <asp:Button cssClass="menubtn" ID="btWyloguj" runat="server" Text="Wyloguj" />
                                     </h1>
+
                 </td>
 
 

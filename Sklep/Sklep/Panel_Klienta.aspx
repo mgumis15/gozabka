@@ -17,7 +17,7 @@
         td{
             width:33.3%;
             text-align:center;
-            heigth:auto;
+            height:auto;
         }
         #tKoszyk{
             border:1px solid black;
@@ -39,76 +39,150 @@
         td{
             width:20%;
         }
+
+        .menuTab{
+            width:100%;
+            background-color:black;
+        }
+        h1{
+            text-align:center;
+        }
+
+        a{
+            text-decoration:none;
+            text-align:center;
+            color:white;
+            background-color:black;
+            display:block;
+            border:2px solid white;
+            border-radius:100px;
+            width:60%;
+            margin:0 auto;
+            padding:10px;
+
+        }
+        body{
+            background-color:black;
+
+        }
+        .aspTextBox{
+            width:100%;
+            background-color:#191717;
+            border:1px solid white;
+            border-radius:10px;
+            text-align:center;
+            color:white;
+            height:50px;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        .aspButton{
+            color:white;
+            background-color:black;
+            border:2px solid black;
+            border-radius:5px;
+            padding:10px;
+            width:160px;
+            text-align:center;
+            font-size:15px;
+            font-weight:bold;
+        }
+        .aspLabel{
+            color:white;
+        }
+        .menu{
+            width:25%;
+        }
+        .auto-style5 {
+            height: 77px;
+            width: 355px;
+        }
+td{
+    height:auto;
+}
     </style>
 </head>
 <body>
 
     <form id="form1" runat="server">
+                <table class="menuTab">
+            <tr>
+                <td class="menu">
 
+                    <img alt="logo" class="auto-style5" src="/Images/logo.png" /></td>
+
+                <td class="menu">
+                    <h1><a href="/AlterowaniShop.aspx">Strona Główna</a></h1>
+                   </td>
+                <td class="menu" >
+                    <h1 > <a style="display:flex;flex-direction:row;align-items:center;justify-content:space-around;" href="/Panel_Klienta.aspx">Panel Klienta<img alt="koszyk" style="border:none;width:40px;" src="/Images/koszyk.png" /></a></h1>
+                </td>
+                                <td class="menu" >
+                    <h1 > <a  href="/Logowanie.aspx">Wyloguj</a></h1>
+                </td>
+
+
+            </tr>
+        </table>
     <table class="auto-style1">
         <tr>
             <td class="auto-style2"></td>
-            <td class="auto-style2">Panel Klienta</td>
+            <td class="auto-style2"></td>
             <td class="auto-style2"></td>
         </tr>
         <tr>
-            <td>
-                <asp:Button ID="btZmiana" runat="server" OnClick="btZmiana_Click" Text="Zmień Hasło" />
+
+            <td class="minimenu" colspan="3">
+                 <asp:Button CssClass="aspButton" style="margin-right:100px;" ID="btHaslo" runat="server" Text="Zmień dane konta" OnClick="btHaslo_Click" BorderColor="White" BorderStyle="Solid" BorderWidth="1px" />
+                <asp:Button CssClass="aspButton" style="margin-left:100px;" ID="btZmiana" runat="server" OnClick="btZmiana_Click" Text="Zmień Hasło" BorderColor="White"  BorderStyle="Solid" BorderWidth="1px" />
+               
             </td>
-            <td>
-                <asp:Button ID="btHaslo" runat="server" Text="Zmień dane konta" OnClick="btHaslo_Click" />
-            </td>
-            <td>
-                &nbsp;</td>
+
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lName" runat="server" Text="Nazwa" Visible="False"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lName" runat="server" Text="Nazwa" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbName" runat="server" Visible="False"></asp:TextBox>
+                <asp:TextBox cssClass="aspTextBox" ID="tbName" runat="server" Visible="False"></asp:TextBox>
             </td>
-            <td>&nbsp;</td>
+            <td></td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lMail" runat="server" Text="Adres e-mail" Visible="False"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lMail" runat="server" Text="Adres e-mail" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbMail" runat="server" Visible="False"></asp:TextBox>
+                <asp:TextBox cssClass="aspTextBox" ID="tbMail" runat="server" Visible="False"></asp:TextBox>
             </td>
-            <td>&nbsp;</td>
+            <td></td>
         </tr>
         <tr>
             <td class="auto-style3">
-                <asp:Label ID="lInfo" runat="server"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lInfo" runat="server"></asp:Label>
             </td>
             <td class="auto-style3">
-                <asp:Button ID="btConfirm" runat="server" OnClick="btConfirm_Click" Text="Zatwierdź" Visible="False" />
+                <asp:Button CssClass="aspButton" ID="btConfirm" runat="server" OnClick="btConfirm_Click" Text="Zatwierdź" Visible="False" BorderColor="White"  BorderStyle="Solid" BorderWidth="1px"/>
             </td>
             <td class="auto-style3"></td>
         </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
+
         <tr>
             <td class="auto-style4">
-                <asp:Label ID="lOld" runat="server" Text="Stare hasło" Visible="False"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lOld" runat="server" Text="Stare hasło" Visible="False"></asp:Label>
             </td>
             <td class="auto-style4">
-                <asp:TextBox ID="tbOld" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:TextBox ID="tbOld" cssClass="aspTextBox" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvOld" runat="server" ControlToValidate="tbOld" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
             </td>
             <td class="auto-style4"></td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lNew" runat="server" Text="Nowe hasło" Visible="False"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lNew" runat="server" Text="Nowe hasło" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbNew" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:TextBox ID="tbNew" cssClass="aspTextBox" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvNew" runat="server" ControlToValidate="tbNew" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
                 <asp:RegularExpressionValidator ID="revNew" runat="server" ControlToValidate="tbNew" Enabled="False" ErrorMessage="Hasło nie może zawierać białych znaków i musi być złożone" ForeColor="Red" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])\S{8,15}$">*</asp:RegularExpressionValidator>
             </td>
@@ -116,10 +190,10 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lNewRep" runat="server" Text="Powtórz nowe hasło" Visible="False"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lNewRep" runat="server" Text="Powtórz nowe hasło" Visible="False"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="tbNewRep" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
+                <asp:TextBox ID="tbNewRep" cssClass="aspTextBox" runat="server" Visible="False" TextMode="Password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvRepNew" runat="server" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Pole wymagane" ForeColor="Red">*</asp:RequiredFieldValidator>
                 <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="tbNew" ControlToValidate="tbNewRep" Enabled="False" ErrorMessage="Hasła nie są identyczne" ForeColor="Red">*</asp:CompareValidator>
             </td>
@@ -129,18 +203,19 @@
         </tr>
         <tr>
             <td>
-                <asp:ValidationSummary ID="vsPass" runat="server" />
+                &nbsp;</td>
+            <td>
+                <asp:Button CssClass="aspButton" ID="btPass" runat="server" Text="Zatwierdź" Visible="False" OnClick="btPass_Click" BorderColor="White"  BorderStyle="Solid" BorderWidth="1px"/>
             </td>
             <td>
-                <asp:Button ID="btPass" runat="server" Text="Zatwierdź" Visible="False" OnClick="btPass_Click" />
+                <asp:ValidationSummary ID="vsPass" runat="server" BackColor="Black" ForeColor="White" />
             </td>
-            <td>&nbsp;</td>
         </tr>
         <tr>
             <td>
                 &nbsp;</td>
             <td>
-                <asp:Label ID="lKoszyk" runat="server"></asp:Label>
+                <asp:Label CssClass="aspLabel" ID="lKoszyk" runat="server"></asp:Label>
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -161,7 +236,7 @@
                 
             </td>
             <td style="text-align: left">
-                <asp:Button ID="bBuy" runat="server" CausesValidation="False" OnClick="bBuy_Click" Text="KUPUJĘ!" />
+                <asp:Button CssClass="aspButton" ID="bBuy" runat="server" CausesValidation="False" OnClick="bBuy_Click" Text="KUPUJĘ!" BorderColor="White"  BorderStyle="Solid" BorderWidth="1px" />
             </td>
         </tr>
         <tr>

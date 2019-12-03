@@ -452,8 +452,6 @@ namespace Sklep
                 Response.Redirect("Logowanie.aspx");
             }
         }
-        
-       
 
 
     }

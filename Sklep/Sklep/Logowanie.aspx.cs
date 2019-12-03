@@ -18,7 +18,9 @@ namespace Sklep
     {
         MySqlConnection connection;
         MySqlCommand command;
-
+        string nameS = "";
+        string idS = "";
+        string typeS = "";
         //Tutaj ją deklaruje
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -73,6 +75,7 @@ namespace Sklep
         {
             //tutaj ją wypisuję i używam
             var authCheck = 0;
+            
             if (tbAuth.Visible)
             {
                 
@@ -86,6 +89,10 @@ namespace Sklep
                     {
                         authCheck = 1;
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj na stronie " + tbName.Text + "')", true);
+                        nameS = reader2["name"].ToString();
+                        idS = reader2["id"].ToString();
+                        typeS = reader2["type"].ToString();
+                        break;
                     }
                     else
                     {
@@ -100,7 +107,11 @@ namespace Sklep
                 {
                     command.CommandText = "UPDATE `users` SET `authorized` = '1' WHERE `users`.`name` ='" + tbName.Text + "'";
                     command.ExecuteNonQuery();
+                    Session["name"] = nameS;
+                    Session["id"] = idS;
+                    Session["type"] = typeS;
 
+                    Response.Redirect("AlterowaniShop.aspx");
                 }
 
 
@@ -123,6 +134,7 @@ namespace Sklep
                             {
                                 check1 = false;
                                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Taki użytkowik już istnieje')", true);
+
                                 break;
                             }
                         }
@@ -132,7 +144,7 @@ namespace Sklep
                             //wysylanie maila
                             int authCode = MailAuthSender(tbMail.Text, tbName.Text);
                             string outputVal = Encode(tbPassword.Text);
-                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`,'koszyk') VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', " + authCode + ", 'user','{data:[]}');";
+                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`,koszyk) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', '" + authCode + "', 'user','{data:[]}');";
                             command.ExecuteNonQuery();
                         }
                     }
@@ -142,9 +154,7 @@ namespace Sklep
                     command.CommandText = "select * from users";
                     MySqlDataReader reader = command.ExecuteReader();
                     bool warunek = false;
-                    string nameS = "";
-                    string idS = "";
-                    string typeS = "";
+                    
                     while (reader.Read())
                     {
                         if (reader["name"].ToString() == tbName.Text)

@@ -9,6 +9,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
+using System.Timers;
+
 
 namespace Sklep
 {
@@ -203,7 +205,7 @@ namespace Sklep
 
         protected void bBuy_Click(object sender, EventArgs e)
         {
-            
+            Response.Redirect("platnosc.aspx");
         }
 
 
@@ -270,6 +272,17 @@ namespace Sklep
                 client.Send(message);
                 lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
 
+
+                /*
+                 * ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.')", true);
+                        Session["name"] = null;
+                        Session["id"] = null;
+                        Session["type"] = null;
+                System.Timers.Timer aTimer = new System.Timers.Timer(5000);
+                aTimer.Elapsed += OnTimedEvent; 
+                aTimer.AutoReset = false;
+                aTimer.Enabled = true;
+                */
             }
             catch (Exception ex)
             {
@@ -397,10 +410,19 @@ namespace Sklep
                         client.EnableSsl = true;
                         client.Credentials = new System.Net.NetworkCredential("Alterowani.Shop@gmail.com", "ZAQ!2wsx");
 
-
                         client.Send(message);
                         lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
+                        System.Timers.Timer aTimer = new System.Timers.Timer(5000);
+                        aTimer.Elapsed += (Object source, System.Timers.ElapsedEventArgs ef)=>{
+                            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                            Session["name"] = null;
+                            Session["id"] = null;
+                            Session["type"] = null;
+                        };
+                        aTimer.AutoReset = false;
+                        aTimer.Enabled = true;
 
+                        
                     }
                     catch (Exception ex)
                     {
@@ -419,8 +441,20 @@ namespace Sklep
                 command.CommandText = "UPDATE `users` SET `password` = '" + nowe + "', `authorized` = '0' , `authorizationCode` = '" + authCode + "' WHERE `users`.`id` = " + User + "";
                 command.ExecuteNonQuery();
             }
-        }
 
-      
+
+             void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs ef)
+            {
+                Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAA");
+                Session["name"] = null;
+                Session["id"] = null;
+                Session["type"] = null;
+                Response.Redirect("Logowanie.aspx");
+            }
+        }
+        
+       
+
+
     }
 }

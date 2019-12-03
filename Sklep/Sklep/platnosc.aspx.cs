@@ -12,17 +12,26 @@ namespace Sklep
 {
     public partial class platnosc : System.Web.UI.Page
     {
-        String User = "5";
+        string User ;
         String kosz = "";
 
         MySqlConnection connection;
         MySqlCommand command;
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
-            connection.Open();
-            command = connection.CreateCommand();
-            getData();
+            if (Session["id"] != null)
+            {
+                User = Session["id"].ToString();
+                connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
+                connection.Open();
+                command = connection.CreateCommand();
+
+                getData();
+            }
+            else
+            {
+                Response.Redirect("Logowanie.aspx");
+            }
         }
 
         //pobranie koszyka
@@ -85,22 +94,7 @@ namespace Sklep
                             row.Cells.Add(cellPhoto);
 
 
-                            DropDownList select = new DropDownList();
-                            select.ID = "select/" + reader2["id"].ToString();
-
-                            string choosen = "";
-                            foreach (JObject element in jsonObject["data"])
-                            {
-                                if (reader2["id"].ToString() == element["id"].ToString())
-                                {
-                                    choosen = element["ilosc"].ToString();
-                                    break;
-                                }
-                            }
                             
-                            TableCell cellSelect = new TableCell();
-                            cellSelect.Controls.Add(select);
-                            row.Cells.Add(cellSelect);
 
 
 

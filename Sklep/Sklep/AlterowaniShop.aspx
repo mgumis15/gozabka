@@ -83,6 +83,9 @@
 
         }
         #tShop td select{
+            position:absolute;
+            top:255px;
+            right:250px;
             background-color:grey;
             border:1px solid white;
             width:50px;
@@ -92,6 +95,9 @@
 
         }
         #tShop td input{
+            position:absolute;
+            top:250px;
+            right:60px;
             width:150px;
             background-color:#191717;
             border:1px solid white;
@@ -100,7 +106,7 @@
             color:white;
             height:40px;
             margin:20px;
-
+        
 
 
         }
@@ -110,8 +116,12 @@
         }
         td{
             width:20%;
+            position:relative;
         }
         .Title{
+            position:absolute;
+            top:10px;
+            right:200px;
             font-size:25px;
             color:white;
             text-align:center;
@@ -119,12 +129,18 @@
 
         }
         .desc{
+            position:absolute;
+            top:50px;
+            right:250px;
             font-size:18px;
             color:white;
             text-align:center;
            
         }
         .price{
+            position:absolute;
+            top:100px;
+            right:200px;
             margin-top:100px;
             color:white;
             font-size:25px;

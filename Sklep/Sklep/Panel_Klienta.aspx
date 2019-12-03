@@ -115,6 +115,14 @@
             font-size:25px;
             font-weight:bold;
         }
+        .aspSelect{
+            background-color:grey;
+            border:1px solid white;
+            width:50px;
+            height:30px;
+            color:white;
+            margin:20px;
+        }
     </style>
 </head>
 <body>
@@ -243,12 +251,12 @@
             <td>
                 <asp:Table ID="tKoszyk" runat="server">
                     <asp:TableRow runat="server" Font-Bold="True">
-                        <asp:TableCell runat="server" Font-Bold="True">Nr.</asp:TableCell>
-                        <asp:TableCell runat="server" Font-Bold="True">Nazwa</asp:TableCell>
-                        <asp:TableCell runat="server" Font-Bold="True">Cena</asp:TableCell>
-                        <asp:TableCell runat="server" Font-Bold="True">Opis</asp:TableCell>
-                        <asp:TableCell runat="server" Font-Bold="True">Miniaturka</asp:TableCell>
-                        <asp:TableCell runat="server" Font-Bold="True">Ilość</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Nr.</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Nazwa</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Cena</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Opis</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Miniaturka</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Ilość</asp:TableCell>
                     </asp:TableRow>
                 </asp:Table>
                 

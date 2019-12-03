@@ -87,17 +87,21 @@ namespace Sklep
 
                             TableCell cellID = new TableCell();
                             cellID.Text = x.ToString();
+                            cellID.CssClass = "aspLabel";
                             row.Cells.Add(cellID);
 
                             TableCell cellName = new TableCell();
+                            cellName.CssClass = "aspLabel";
                             cellName.Text = reader2["name"].ToString();
                             row.Cells.Add(cellName);
 
                             TableCell cellPrice = new TableCell();
+                            cellPrice.CssClass = "aspLabel";
                             cellPrice.Text = reader2["price"].ToString();
                             row.Cells.Add(cellPrice);
 
                             TableCell cellDescription = new TableCell();
+                            cellDescription.CssClass = "aspLabel";
                             cellDescription.Text = reader2["description"].ToString();
                             row.Cells.Add(cellDescription);
 
@@ -108,6 +112,7 @@ namespace Sklep
 
 
                             DropDownList select = new DropDownList();
+                            select.CssClass = "aspSelect";
                             select.ID = "select/" + reader2["id"].ToString();
 
                             string choosen="";
@@ -139,6 +144,7 @@ namespace Sklep
 
 
                             Button delButton = new Button();
+                            delButton.CssClass = "aspButton";
                             delButton.ID = "delete" + reader2["id"].ToString();
                             delButton.CausesValidation = false;
                             delButton.UseSubmitBehavior = false;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 29 Lis 2019, 17:34
+-- Czas generowania: 04 Gru 2019, 00:53
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.4
 
@@ -46,8 +46,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`) VALUES
 (4, 'third', '400', 'third', 'untitled-goose-game-12.jpg'),
 (63, 'qwe', '2', 'qweee', '68656437_1449064128566628_8884557576000241664_n.jpg'),
 (64, 'next1', '1', 'next1', '69751466_2757784950952547_2823569860406018048_n.jpg'),
-(65, 'ewe', '3123', 'ewewe', '74529523_2530516867038709_8410846262621896704_n.jpg'),
-(66, 'gg', '123', 'ggggggg', '70119501_2244983345630935_8443445124528078848_n.jpg');
+(65, 'ewe', '3123', 'ewew', '74529523_2530516867038709_8410846262621896704_n.jpg');
 
 -- --------------------------------------------------------
 
@@ -71,7 +70,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`, `koszyk`) VALUES
-(5, 'mati', '·«ëµR j ', 'mateusztrial20@interia.pl', 1, '26143', 'user', '{\r\n  data: [{id:3,ilosc:3}]\r\n}');
+(6, 'mati', '·«ëµR j ', 'mateusztrial20@interia.pl', 1, '88724', 'admin', '{\r\n  data: [\r\n    {\r\n      id: 3,\r\n      ilosc: 7\r\n    },\r\n    {\r\n      id: 65,\r\n      ilosc: 7\r\n    },\r\n    {\r\n      id: 64,\r\n      ilosc: 1\r\n    }\r\n  ]\r\n}'),
+(10, 'mat', '·«ëµR j ', 'mateusztrial20@gmail.com', 0, '3566', 'user', '{\r\n  data: [\r\n    {\r\n      id: 1,\r\n      ilosc: 6\r\n    },\r\n    {id:4,ilosc:10}\r\n  ]\r\n}'),
+(11, 'mate', '·«ëµR j ', 'mateusztrial20@gmail.com', 1, '64930', 'user', '{\r\n  data: [\r\n    {\r\n      id: 4,\r\n      ilosc: 4\r\n    },\r\n    {\r\n      id: 3,\r\n      ilosc: 5\r\n    }\r\n  ]\r\n}'),
+(12, 'mateusz', '·«ëµR j ', 'mateusztrial20@gmail.com', 1, '8919', 'user', '{data:[]}');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -97,13 +99,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

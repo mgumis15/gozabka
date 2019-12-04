@@ -157,6 +157,7 @@ namespace Sklep
                     command.CommandText = "select * from users";
                     MySqlDataReader reader = command.ExecuteReader();
                     bool warunek = false;
+                    bool enabled = true;
                     
                     while (reader.Read())
                     {
@@ -169,13 +170,22 @@ namespace Sklep
 
                                 if (reader["authorized"].ToString() == "True")
                                 {
-
-                                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
-                                    //e.Authenticated = true;
-                                    nameS = reader["name"].ToString();
-                                    idS = reader["id"].ToString();
-                                    typeS = reader["type"].ToString();
-                                    warunek = true;
+                                    if(reader["enable"].ToString() == "TRUE")
+                                    {
+                                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Witaj ponownie " + reader["name"].ToString() + "')", true);
+                                        //e.Authenticated = true;
+                                        nameS = reader["name"].ToString();
+                                        idS = reader["id"].ToString();
+                                        typeS = reader["type"].ToString();
+                                        warunek = true;
+                                    }
+                                    else
+                                    {
+                                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('To konto jest obecnie zablokowane. W celu odblokowania konta skontaktuj się z nami drogą mailową: Alterowani.Shop@gmail.com')", true);
+                                        warunek = true;
+                                        enabled = false;
+                                    }
+                                
                                     
 
                                 }
@@ -195,22 +205,30 @@ namespace Sklep
                     reader.Close();
                     if (warunek)
                     {
-                        command.Connection.Close();
-                        connection.Close();
+                        if (enabled)
+                        {
+                            command.Connection.Close();
+                            connection.Close();
 
 
-                        Session["name"] = nameS;
-                        Session["id"] = idS;
-                        Session["type"] = typeS;
-                        if (Session["type"].ToString() == "admin")
-                        {
-                            Response.Redirect("Products.aspx");
+                            Session["name"] = nameS;
+                            Session["id"] = idS;
+                            Session["type"] = typeS;
+                            if (Session["type"].ToString() == "admin")
+                            {
+                                Response.Redirect("Products.aspx");
+                            }
+                            else
+                            {
+                                Response.Redirect("AlterowaniShop.aspx");
+                            }
                         }
-                        else
-                        {
-                            Response.Redirect("AlterowaniShop.aspx");
-                        }
-                        
+                       
+
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Podałeś błędny login lub hasło!')", true);
                     }
 
 

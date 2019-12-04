@@ -262,6 +262,7 @@
                 
             </td>
             <td style="text-align: left">
+                <asp:Label ID="lPrice" runat="server" Visible="False" ForeColor="White"></asp:Label>
                 <asp:Button CssClass="aspButton" ID="bBuy" runat="server" CausesValidation="False" OnClick="bBuy_Click" Text="KUPUJĘ!" BorderColor="White"  BorderStyle="Solid" BorderWidth="1px" />
             </td>
         </tr>

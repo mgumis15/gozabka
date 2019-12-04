@@ -22,7 +22,7 @@ namespace Sklep
 
         //musi byc zmienna przy przejsciu miedzy ekranami o id usera
         string User ;
-
+        float amount;
         protected void Page_Load(object sender, EventArgs e)
         {
           
@@ -65,6 +65,8 @@ namespace Sklep
             if (jsonObject["data"].ToString() == "[]")
             {
                 lKoszyk.Text = "Twój koszyk jest pusty";
+                bBuy.Visible = false;
+                lPrice.Visible = false;
             }
 
             else
@@ -76,12 +78,14 @@ namespace Sklep
                 while (reader2.Read())
 
                 {
-
+                    float amountP = float.Parse(reader2["price"].ToString());
                     foreach (JObject id in jsonObject["data"])
                     {
                         if (reader2["id"].ToString() == id["id"].ToString())
                         {
                             x++;
+                            int amountC = Int32.Parse(id["ilosc"].ToString());
+
 
                             TableRow row = new TableRow();
 
@@ -115,26 +119,29 @@ namespace Sklep
                             select.CssClass = "aspSelect";
                             select.ID = "select/" + reader2["id"].ToString();
 
-                            string choosen="";
-                            foreach (JObject element in jsonObject["data"])
-                            {
-                                if (reader2["id"].ToString() == element["id"].ToString())
-                                {
-                                    choosen = element["ilosc"].ToString();
-                                    break;
-                                }
-                            }
+                            ListItem priceItem = new ListItem();
+                            priceItem.Value = reader2["price"].ToString();
+                            priceItem.Enabled = false;
+                            select.Items.Add(priceItem);
+
+                            ListItem lastItem = new ListItem();
+                            lastItem.Value = "1";
+                            lastItem.Enabled = false;
+                            select.Items.Add(lastItem);
                             for ( int i = 1; i <= 10; i++)
                             {
                                 ListItem option = new ListItem();
                                 option.Text = i.ToString();
                                 option.Value = i.ToString();
-                                if(i.ToString()== choosen)
+                                if(i.ToString()== id["ilosc"].ToString())
                                 {
                                     option.Selected = true;
+                                    select.Items[1].Value = option.Value;
                                 }
                                 select.Items.Add(option);
                             }
+                            
+                           
                             select.SelectedIndexChanged += this.select_SelectedIndexChanged;
                             select.AutoPostBack = true;
 
@@ -149,13 +156,15 @@ namespace Sklep
                             delButton.CausesValidation = false;
                             delButton.UseSubmitBehavior = false;
                             delButton.Text = "USUŃ Z KOSZYKA";
-                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+",'row':"+x+ ",'data':"+ jsonObject["data"].ToString() + "}";
+                            delButton.CommandName = "{ 'id':" + reader2["id"].ToString()+",'row':"+x+ ",'data':"+ jsonObject["data"].ToString() + ",'price':'"+ reader2["price"].ToString() + "'}";
                             delButton.Click += new EventHandler(this.delButton_Click);
                             TableCell cellDelButt = new TableCell();
                             cellDelButt.Controls.Add(delButton);
                             row.Cells.Add(cellDelButt);
 
                             tKoszyk.Rows.Add(row);
+
+                            amount += amountC * amountP;
                             
                         }
                     }
@@ -163,13 +172,15 @@ namespace Sklep
 
                 }
                 reader2.Close();
-
+                lPrice.Visible = true;
+                lPrice.Text = "Łączna cena produktów: " + amount.ToString() + " zł";
             }
         }
 
         protected void select_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList ddp = sender as DropDownList;
+            Debug.WriteLine(ddp.Items[0].Value);
             string[] x = ddp.ID.Split("/".ToCharArray());
             JObject jsonObject = JObject.Parse(hfKoszyk.Value);
             foreach (JObject element in jsonObject["data"])
@@ -183,36 +194,52 @@ namespace Sklep
             wynik = wynik.Replace("\"", "");
             command.CommandText = "UPDATE `users` SET `koszyk` = '" + wynik + "' WHERE `users`.`id` = " + User;
             command.ExecuteNonQuery();
+            int cutHelp = Int32.Parse(ddp.Items[1].Value) - Int32.Parse(ddp.SelectedValue) ;
+            float cut = cutHelp * float.Parse(ddp.Items[0].Value);
+            amount -= cut;
+            lPrice.Text = "Łączna cena produktów: " + amount.ToString() + " zł";
 
+            ddp.Items[1].Value = ddp.SelectedValue;
         }
         protected void delButton_Click(object sender, EventArgs e)
         {
 
             lKoszyk.Text = "usunieto";
             Button btn = sender as Button;
+            Debug.WriteLine(btn.CommandName);
             JObject jObject = JObject.Parse(btn.CommandName);
             foreach(JObject element in jObject["data"])
             {
                 if(element["id"].ToString()== jObject["id"].ToString())
                 {
+                    
                     element.Remove();
                     break;
                 }
             }
+            DropDownList ddp = tKoszyk.Rows[int.Parse(jObject["row"].ToString())].Cells[5].Controls[0] as DropDownList;
+
+            float cut = Int32.Parse(ddp.SelectedValue) * float.Parse(jObject["price"].ToString());
+            amount -= cut;
+            lPrice.Text = "Łączna cena produktów: " + amount.ToString() + " zł";
             tKoszyk.Rows.RemoveAt(int.Parse(jObject["row"].ToString()));
             JObject data = JObject.Parse("{data:" + jObject["data"].ToString() + "}");
             string dataStr=data.ToString();
             dataStr=dataStr.Replace("\"", "");
             command.CommandText = "UPDATE `users` SET `koszyk` = '"+ dataStr+"' WHERE `users`.`id` = "+User;
             command.ExecuteNonQuery();
+            if (jObject["data"].ToString() == "[]")
+            {
+                bBuy.Visible = false;
+                lPrice.Visible = false;
+                lKoszyk.Text = "Twój koszyk jest pusty";
+            }
+           
         }
 
 
 
-        protected void bBuy_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("platnosc.aspx");
-        }
+      
 
 
         protected void btHaslo_Click(object sender, EventArgs e)
@@ -488,6 +515,10 @@ namespace Sklep
             Session["id"] = null;
             Session["type"] = null;
             Response.Redirect("Logowanie.aspx");
+        }
+        protected void bBuy_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("platnosc.aspx");
         }
     }
 }

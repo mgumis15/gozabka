@@ -91,6 +91,7 @@
   <ItemGroup>
     <Content Include="Panel_Klienta.aspx" />
     <Content Include="platnosc.aspx" />
+    <Content Include="Users.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="AlterowaniShop.aspx" />
     <Content Include="Logowanie.aspx" />
@@ -111,6 +112,13 @@
     </Compile>
     <Compile Include="platnosc.aspx.designer.cs">
       <DependentUpon>platnosc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>

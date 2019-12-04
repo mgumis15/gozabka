@@ -13,8 +13,8 @@ namespace Sklep
     public partial class platnosc : System.Web.UI.Page
     {
         string User ;
-        String kosz = "";
-
+        string kosz = "";
+        float amount;
         MySqlConnection connection;
         MySqlCommand command;
         protected void Page_Load(object sender, EventArgs e)
@@ -49,13 +49,7 @@ namespace Sklep
             }
             reader.Close();
             JObject jsonObject = JObject.Parse(hfPobierz.Value);
-            if (jsonObject["data"].ToString() == "[]")
-            {
-                lKoszyk.Text = "Twój koszyk jest pusty";
-            }
-
-            else
-            {
+         
 
                 command.CommandText = "select * from products";
                 MySqlDataReader reader2 = command.ExecuteReader();
@@ -63,12 +57,15 @@ namespace Sklep
                 while (reader2.Read())
 
                 {
-
+                    float amountP = float.Parse(reader2["price"].ToString());
                     foreach (JObject id in jsonObject["data"])
                     {
                         if (reader2["id"].ToString() == id["id"].ToString())
                         {
                             x++;
+
+                            int amountC = Int32.Parse(id["ilosc"].ToString());
+
                             TableRow row = new TableRow();
 
                             TableCell cellID = new TableCell();
@@ -82,15 +79,17 @@ namespace Sklep
                             row.Cells.Add(cellName);
                             kosz += reader2["name"].ToString() + ", ";
 
-                            TableCell cellPrice = new TableCell();
+                        TableCell cellCount = new TableCell();
+                        cellCount.CssClass = "aspLabel";
+                        cellCount.Text = id["ilosc"].ToString();
+                        row.Cells.Add(cellCount);
+
+                        TableCell cellPrice = new TableCell();
                             cellPrice.CssClass = "aspLabel";
                             cellPrice.Text = reader2["price"].ToString();
                             row.Cells.Add(cellPrice);
 
-                            TableCell cellDescription = new TableCell();
-                            cellDescription.CssClass = "aspLabel";
-                            cellDescription.Text = reader2["description"].ToString();
-                            row.Cells.Add(cellDescription);
+                            
 
                             //img do ogarniecia
                             TableCell cellPhoto = new TableCell();
@@ -98,11 +97,11 @@ namespace Sklep
                             row.Cells.Add(cellPhoto);
 
 
-                            
-
-
-
                             tKoszyk.Rows.Add(row);
+
+
+
+                            amount += amountC * amountP;
 
                         }
                     }
@@ -110,8 +109,8 @@ namespace Sklep
 
                 }
                 reader2.Close();
-
-            }
+            lKoszyk.Text = "Łączna cena zakupów wynosi: " + amount.ToString() + " zł";
+            
         }
         //wybor platnosci
         protected void rbDostawa_SelectedIndexChanged(object sender, EventArgs e)
@@ -141,7 +140,6 @@ namespace Sklep
                 MailMessage message;
                 string mail = "";
                 string name = "";
-                double cena = 1123.31;
                 string dostawa = "";
 
                 if (rbPlatnosc.SelectedIndex == 3)
@@ -150,7 +148,7 @@ namespace Sklep
                 }
                 else
                 {
-                    dostawa = "Wybrano płatność internetową. Zrób przelew na kwotę " + cena + " zł.\nNumer Konta to 00 0000 0000 0000 0000 0000 0000.\n";
+                    dostawa = "Wybrano płatność internetową. Zrób przelew na kwotę " + amount.ToString() + " zł.\nNumer Konta to 00 0000 0000 0000 0000 0000 0000.\n";
                 }
 
                 MySqlCommand command = connection.CreateCommand();

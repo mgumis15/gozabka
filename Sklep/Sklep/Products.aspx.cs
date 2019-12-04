@@ -22,11 +22,31 @@ namespace Sklep
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
-            connection.Open();
-            command = connection.CreateCommand();
-            getData();
-            Debug.WriteLine("Kurcze");
+            if (Session["type"] != null)
+            {
+                if (Session["type"].ToString() == "admin")
+                {
+                    connection = new MySqlConnection("Database=gozabka;Data Source=localhost;User Id=root;Password=");
+                    connection.Open();
+                    command = connection.CreateCommand();
+                    getData();
+                }
+                else
+                {
+                    Session["name"] = null;
+                    Session["id"] = null;
+                    Session["type"] = null;
+                    Response.Redirect("Logowanie.aspx");
+                }
+            }
+            else
+            {
+                Session["name"] = null;
+                Session["id"] = null;
+                Session["type"] = null;
+                Response.Redirect("Logowanie.aspx");
+            }
+          
         }
 
        

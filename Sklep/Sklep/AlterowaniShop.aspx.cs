@@ -26,6 +26,7 @@ namespace Sklep
             {
                 User = Session["id"].ToString();
                 btWyloguj.Text = "Wyloguj się";
+                if (Session["type"].ToString() == "admin") btKoszyk.Text = "Produkty";
             }
 
             getData();
@@ -223,22 +224,20 @@ namespace Sklep
             }
             else
             {
-                Response.Redirect("Logowanie.aspx");
+                        Response.Redirect("Logowanie.aspx");
             }
             }
             else
             {
                 command.Connection.Close();
                 connection.Close();
-
-                Response.Redirect("Products.aspx");
+                    Response.Redirect("Products.aspx");
             }
             }
             else
             {
                 command.Connection.Close();
                 connection.Close();
-
                 Response.Redirect("Logowanie.aspx");
             }
         }

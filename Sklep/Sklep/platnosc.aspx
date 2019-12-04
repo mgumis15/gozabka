@@ -191,6 +191,13 @@
                 </td>
                 <td>&nbsp;
                 <asp:Table ID="tKoszyk" runat="server">
+                    <asp:TableRow runat="server" Font-Bold="True">
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Nr.</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Nazwa</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Ilość</asp:TableCell>
+                        <asp:TableCell CssClass="aspLabel" runat="server" Font-Bold="True">Cena</asp:TableCell>
+                       
+                    </asp:TableRow>
                 </asp:Table>
                 </td>
                 <td>

@@ -81,10 +81,14 @@ namespace Sklep
                 cellName.Text = reader["name"].ToString();
                 row.Cells.Add(cellName);
 
-               
+                TableCell cellLogowania = new TableCell();
+                cellLogowania.CssClass = "Title";
+                cellLogowania.Text = reader["logowania"].ToString();
+                row.Cells.Add(cellLogowania);
 
 
-                Button delButton = new Button();
+
+                    Button delButton = new Button();
                 delButton.CssClass = "aspButton";
                 delButton.ID = "delete" + reader["id"].ToString();
                 delButton.CausesValidation = false;
@@ -131,7 +135,7 @@ namespace Sklep
 
 
 
-                tUsers.Rows.Add(row);
+                    tUsers.Rows.Add(row);
                 x++;
                 }
             }

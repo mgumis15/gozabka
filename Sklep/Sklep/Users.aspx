@@ -215,13 +215,16 @@
                      <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Nazwa
                      </asp:TableCell>
-                    
+                     <asp:TableCell cssClass="aspLabel" Font-Bold="True">
+                         Ilość odwiedzin
+                     </asp:TableCell>
                       <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Usuń
                      </asp:TableCell>
                       <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Zbanowany
                      </asp:TableCell>
+
                  </asp:TableRow>
 
                  

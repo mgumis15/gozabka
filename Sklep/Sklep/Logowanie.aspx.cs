@@ -147,7 +147,7 @@ namespace Sklep
                             //wysylanie maila
                             int authCode = MailAuthSender(tbMail.Text, tbName.Text);
                             string outputVal = Encode(tbPassword.Text);
-                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`,koszyk) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', '" + authCode + "', 'user','{data:[]}');";
+                            command.CommandText = "INSERT INTO `users` (`id`, `name`, `password`, `email`, `authorized`, `authorizationCode`, `type`,koszyk,logowania) VALUES (NULL, '" + tbName.Text + "', '" + outputVal + "', '" + tbMail.Text + "', '0', '" + authCode + "', 'user','{data:[]}',0);";
                             command.ExecuteNonQuery();
                         }
                     }
@@ -207,13 +207,22 @@ namespace Sklep
                     {
                         if (enabled)
                         {
-                            command.Connection.Close();
-                            connection.Close();
+
 
 
                             Session["name"] = nameS;
                             Session["id"] = idS;
                             Session["type"] = typeS;
+
+                            //dodawanie do licznika
+                            Debug.WriteLine("dodawanieeeee");
+                            command.CommandText = "UPDATE `users` SET `logowania`=`logowania`+1 WHERE users.name='"+ Session["name"].ToString() + "'" ;
+                            command.ExecuteNonQuery();
+
+                            command.Connection.Close();
+                            connection.Close();
+
+
                             if (Session["type"].ToString() == "admin")
                             {
                                 Response.Redirect("Products.aspx");

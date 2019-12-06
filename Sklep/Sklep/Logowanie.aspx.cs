@@ -191,6 +191,8 @@ namespace Sklep
                                 }
                                 else
                                 {
+                                    warunek = true;
+                                    enabled = false;
                                     lAuth.Visible = true;
                                     tbAuth.Visible = true;
                                     tbPassword.Visible = false;
@@ -300,6 +302,22 @@ namespace Sklep
 
                 client.Send(message);
                 lInfo.Text = "Wysłano wiadomość na podany adres email. Zaloguj się teraz na stronę i podaj kod autoryzacyjny z maila.";
+                hdLogRes.Value = "0";
+                lName.Visible = true;
+                lPassword.Visible = true;
+                lRepPass.Visible = false;
+                lMail.Visible = false;
+                tbName.Visible = true;
+                tbPassword.Visible = true;
+                tbRepPass.Visible = false;
+                tbMail.Visible = false;
+                bDoLogOrReg.Visible = true;
+                bDoLogOrReg.Text = "Zaloguj się";
+                revPass.Enabled = false;
+                rfvRepPass.Enabled = false;
+                revEmail.Enabled = false;
+                rfvMail.Enabled = false;
+                cvPassMatch.Enabled = false;
 
             }
             catch (Exception ex)

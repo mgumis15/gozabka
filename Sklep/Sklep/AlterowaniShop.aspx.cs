@@ -26,7 +26,7 @@ namespace Sklep
             {
                 User = Session["id"].ToString();
                 btWyloguj.Text = "Wyloguj się";
-                if (Session["type"].ToString() == "admin") btKoszyk.Text = "Produkty";
+                if (Session["type"].ToString() == "admin") btKoszyk.Text = "Zarządzaj sklepem";
             }
 
             getData();

@@ -241,6 +241,14 @@
             <td>
                 &nbsp;</td>
             <td>
+                <asp:Label cssClass="aspLabel" ID="lIlosc" runat="server"></asp:Label>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;</td>
+            <td>
                 <asp:Label CssClass="aspLabel" ID="lKoszyk" runat="server"></asp:Label>
             </td>
             <td>&nbsp;</td>

@@ -249,6 +249,15 @@ namespace Sklep
         protected global::System.Web.UI.WebControls.ValidationSummary vsPass;
 
         /// <summary>
+        /// Kontrolka lIlosc.
+        /// </summary>
+        /// <remarks>
+        /// Pole generowane automatycznie.
+        /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lIlosc;
+
+        /// <summary>
         /// Kontrolka lKoszyk.
         /// </summary>
         /// <remarks>

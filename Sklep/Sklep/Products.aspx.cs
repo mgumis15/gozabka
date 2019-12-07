@@ -237,13 +237,14 @@ namespace Sklep
                 Button btn = sender as Button;
                 hField.Value = btn.CommandName;
                 delDiv.Style.Add("display", "block");
+
                 modDiv.Style.Add("display", "none");
         }
 
         protected void btDelete_Click(object sender, EventArgs e)
         {
             JObject jsonObject = JObject.Parse(hField.Value);
-
+           
             delDiv.Style.Add("display", "none");
             modDiv.Style.Add("display", "none");
             command.CommandText = "DELETE FROM `products` WHERE `id` = " + jsonObject["id"] + ";";
@@ -369,6 +370,13 @@ namespace Sklep
             Session["id"] = null;
             Session["type"] = null;
             Response.Redirect("Logowanie.aspx");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("Users.aspx");
+
         }
     }
 }

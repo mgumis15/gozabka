@@ -206,7 +206,7 @@
         </table>
         <div id="dMain" runat="server">
 
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Adding"/>
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Adding" ForeColor="White"/>
              <asp:Table ID="tProducts" runat="server">
                  <asp:TableRow >
                      <asp:TableCell cssClass="aspLabel" Font-Bold="True">
@@ -290,7 +290,7 @@
                 <br />
                 <asp:Button ID="btMod" runat="server" Text="MODYFIKUJ" ValidationGroup="Modifying" OnClick="btMod_Click"/>   
 
-                <asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="Modifying"/>
+                <asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="Modifying" ForeColor="White"/>
             </div>
                 <div id="delDiv" runat="server">
                     <asp:Label ID="lDelName" runat="server" Text="USUŃ"></asp:Label>

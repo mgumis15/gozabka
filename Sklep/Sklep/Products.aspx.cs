@@ -286,24 +286,20 @@ namespace Sklep
                 x++;
             }
 
-
-           //ŚCIEŻKA DO ZMIANY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            string path = "C:/Users/mateu/source/repos/gozabka/Sklep/Sklep/Images/";
-
-
-
+            string[] fileEntries = Directory.GetFiles(Server.MapPath("Images/"));
            
-            string[] fileEntries = Directory.GetFiles(path);
             foreach (string fileName in fileEntries)
             {
-                string[] strlist = fileName.Split("/".ToCharArray());
+                string[] strlist = fileName.Split("\\".ToCharArray());
                 string lastOne = strlist[strlist.Length - 1];
+                Debug.WriteLine(lastOne);
+                
                 if (!images.Contains(lastOne))
                 {
                     if ((System.IO.File.Exists(fileName)))
                     {
-                        Debug.WriteLine("Usunięto plik: " + lastOne);
-                        System.IO.File.Delete(fileName);
+                       Debug.WriteLine("Usunięto plik: " + fileName);
+                       System.IO.File.Delete(fileName);
                     }
                 }
 

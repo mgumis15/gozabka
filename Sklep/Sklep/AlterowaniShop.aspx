@@ -161,7 +161,7 @@
             display:block;
             border:2px solid white;
             border-radius:100px;
-            width:200px;
+            width:240px;
             margin:0 auto;
             padding:10px;
             font-size:25px;

@@ -45,6 +45,7 @@
         }
         .aspLabel{
             color:white;
+            margin:20px;
         }
         
         .menuTab{
@@ -84,34 +85,6 @@
         td{
            align-items:flex-end;
         }
-        .auto-style3 {
-            height: 30px;
-        }
-        .auto-style4 {
-            height: 26px;
-        }
-        .auto-style5 {
-            height: 30px;
-            width: 232px;
-        }
-        .auto-style6 {
-            width: 232px;
-        }
-        .auto-style7 {
-            height: 26px;
-            width: 232px;
-        }
-        .auto-style8 {
-            height: 30px;
-            width: 333px;
-        }
-        .auto-style9 {
-            width: 333px;
-        }
-        .auto-style10 {
-            height: 26px;
-            width: 333px;
-        }
         .menu{
             width:25%;
         }
@@ -144,6 +117,7 @@
                      width:50px;
                     height:50px;
                 }
+
     </style>
 </head>
 <body>
@@ -174,7 +148,7 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <asp:Label CssClass="aspLabel" ID="lTitle" runat="server" Text="Potwierdzenie zamówienia"></asp:Label>
+                    <asp:Label CssClass="aspLabel" ID="lInfo" runat="server"></asp:Label>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -285,7 +259,7 @@
             <tr>
                 <td>&nbsp;</td>
                 <td class="radio">
-                    <asp:RadioButtonList ID="rbPlatnosc" runat="server" AutoPostBack="True" BackColor="Black" CssClass="aspLabel">
+                    <asp:RadioButtonList ID="rbPlatnosc" runat="server" AutoPostBack="True" BackColor="Black" CssClass="aspLabel" OnSelectedIndexChanged="rbPlatnosc_SelectedIndexChanged">
                         <asp:ListItem Value="SPrzelew">Szybki Przelew</asp:ListItem>
                         <asp:ListItem Value="PTradycyjny">Przelew Tradycyjny</asp:ListItem>
                         <asp:ListItem Value="PBLIK">Przelew BLIK</asp:ListItem>
@@ -304,8 +278,7 @@
                     <asp:Button CssClass="aspButton" ID="btKup" runat="server" Text="Złóż zamówienie" OnClick="btKup_Click" />
                 </td>
                 <td>
-                    <asp:Label CssClass="aspLabel" ID="lInfo" runat="server"></asp:Label>
-                </td>
+                    &nbsp;</td>
             </tr>
         </table>
     </form>

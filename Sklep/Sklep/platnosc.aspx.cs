@@ -126,6 +126,21 @@ namespace Sklep
                 rbPlatnosc.Enabled = true;
             }
         }
+        protected void rbPlatnosc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rbPlatnosc.SelectedIndex == 3)
+            {
+                rbDostawa.SelectedIndex = 1;
+                rbDostawa.Enabled = false;
+            }
+            else
+            {
+                rbDostawa.SelectedIndex = 0;
+                rbDostawa.Enabled = true;
+
+            }
+        }
+
         //confirm
         protected void btKup_Click(object sender, EventArgs e)
         {
@@ -144,7 +159,7 @@ namespace Sklep
 
                 if (rbPlatnosc.SelectedIndex == 3)
                 {
-                    dostawa = "Wybrano płatność przy odbiorze.\n";
+                    dostawa = "Wybrano płatność przy odbiorze.\nKwota do zapłaty to: " + amount.ToString()+".";
                 }
                 else
                 {
@@ -214,5 +229,7 @@ namespace Sklep
             Session["type"] = null;
             Response.Redirect("Logowanie.aspx");
         }
+
+
     }
 }

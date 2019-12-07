@@ -29,26 +29,19 @@
         #rightDiv{
             display:inline-block;
             position:fixed;
-            left:60%;
-            top:5%;
-
+            right:20%;
+            top:15%;
+            height:300px;
         }
        
-        #modDiv{
-            display:none;
-           width:300px;
-           height:200px;
-           border:1px solid black;
-           background-color:#00bcd4;
-           text-align:center;
 
-        }
         #delDiv{
-            display:none;
+           display:none;
            width:300px;
-           height:100px;
-           border:1px solid black;
-           background-color:#ff5252;
+           height:auto;
+           border:1px solid white;
+           border-radius:10px;
+           background-color:black;
            text-align:center;
         }
                 body{
@@ -193,6 +186,11 @@
                 <td class="menu">
                    <asp:Button CssClass="menubtn" ID="btRefresh" runat="server" Text="Strona główna" OnClick="btRefresh_Click" />
                    </td>
+                              <td class="menu">
+                   
+                                  <asp:Button ID="Button1" CssClass="menubtn" runat="server" Text="Produkty" OnClick="Button1_Click" />
+                   
+                   </td>
 
                                 <td class="menu" >
                     <h1 >
@@ -215,13 +213,16 @@
                      <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Nazwa
                      </asp:TableCell>
-                    
+                     <asp:TableCell cssClass="aspLabel" Font-Bold="True">
+                         Ilość odwiedzin
+                     </asp:TableCell>
                       <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Usuń
                      </asp:TableCell>
                       <asp:TableCell cssClass="aspLabel" Font-Bold="True">
                          Zbanowany
                      </asp:TableCell>
+
                  </asp:TableRow>
 
                  
@@ -233,12 +234,12 @@
         </div>
         <div id="rightDiv" runat="server">
             
-                <div id="delDiv" runat="server">
-                    <asp:Label ID="lDelName" runat="server" Text="USUŃ"></asp:Label>
+                <div class="delDiv" id="delDiv" runat="server">
+                    <asp:Label ID="lDelName" cssClass="aspLabel" runat="server" Text="Czy na pewno chcesz usunąć?"></asp:Label>
                     <br />
-                    <asp:Label ID="lDelID" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="lDelID" cssClass="aspLabel" runat="server" Text=""></asp:Label>
                        <br />
-                    <asp:Button ID="btDelete" runat="server" Text="USUŃ" OnClick="btDelete_Click" CausesValidation="False" />
+                    <asp:Button ID="btDelete" cssClass="aspButton" runat="server" Text="USUŃ" OnClick="btDelete_Click" CausesValidation="False" />
                 </div>
             </div>
         

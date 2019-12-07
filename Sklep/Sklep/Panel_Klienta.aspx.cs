@@ -56,6 +56,7 @@ namespace Sklep
             MySqlDataReader readerKoszykowski = command.ExecuteReader();
             while (readerKoszykowski.Read())
             {
+                lIlosc.Text = "Zalogowałeś się na naszą stronę już " + readerKoszykowski["logowania"].ToString() + " razy!";
                 hfKoszyk.Value = readerKoszykowski["koszyk"].ToString();
 
             }
@@ -71,7 +72,7 @@ namespace Sklep
 
             else
             {
-                
+                lKoszyk.Text = "Twój koszyk:";
                 command.CommandText = "select * from products";
                 MySqlDataReader reader2 = command.ExecuteReader();
                 int x = 0;

@@ -77,7 +77,7 @@
 
         #tShop td img{
             height:80%;
-            width:auto;
+            width:300px;
             margin:30px;
             
 
@@ -121,7 +121,8 @@
         .Title{
             position:absolute;
             top:10px;
-            right:200px;
+            right:80px;
+            width:300px;
             font-size:25px;
             color:white;
             text-align:center;
@@ -131,7 +132,8 @@
         .desc{
             position:absolute;
             top:50px;
-            right:250px;
+            right:80px;
+            width:300px;
             font-size:18px;
             color:white;
             text-align:center;

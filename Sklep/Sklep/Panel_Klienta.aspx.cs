@@ -79,6 +79,7 @@ namespace Sklep
                 while (reader2.Read())
 
                 {
+
                     float amountP = float.Parse(reader2["price"].ToString());
                     foreach (JObject id in jsonObject["data"])
                     {

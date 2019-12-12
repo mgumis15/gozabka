@@ -261,7 +261,7 @@
                      </asp:TableCell>
                      <asp:TableCell runat="server">
 
-                         <asp:FileUpload ID="fUpload" runat="server" />
+                         <asp:FileUpload ID="fUpload" runat="server" ForeColor="White" />
                          <asp:RequiredFieldValidator ForeColor="Red" ID="rfvFile" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="fUpload" ValidationGroup="Adding"></asp:RequiredFieldValidator>
                          <asp:CustomValidator ForeColor="Red" ID="cvFile" runat="server" ErrorMessage="Zły format pliku" Text="*" ControlToValidate="fUpload" OnServerValidate="cvFile_ServerValidate" ValidationGroup="Adding"></asp:CustomValidator>
 
@@ -296,7 +296,7 @@
                 <asp:RequiredFieldValidator ID="rfvModDescription" runat="server" ErrorMessage="To pole jest wymagane" Text="*" ControlToValidate="tbModDescription" ValidationGroup="Modifying"></asp:RequiredFieldValidator>
                 <br />
                 <asp:Label CssClass="aspLabel" ID="lModPhoto" runat="server" Text="Zdjęcie"></asp:Label>
-                &nbsp;<asp:FileUpload ID="fModUpload" runat="server" />
+                &nbsp;<asp:FileUpload ID="fModUpload" runat="server" ForeColor="White" />
                 
                  <asp:CustomValidator ID="cvModFile" runat="server" ErrorMessage="Zły format pliku" Text="*" ControlToValidate="fModUpload"  ValidationGroup="Modifying" OnServerValidate="cvModFile_ServerValidate"></asp:CustomValidator>
                 <br />

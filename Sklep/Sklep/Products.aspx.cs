@@ -294,15 +294,17 @@ namespace Sklep
                 string[] strlist = fileName.Split("\\".ToCharArray());
                 string lastOne = strlist[strlist.Length - 1];
                 Debug.WriteLine(lastOne);
-                
-                if (!images.Contains(lastOne))
-                {
-                    if ((System.IO.File.Exists(fileName)))
+                if ((lastOne != "logo.png") && (lastOne != "koszyk.png")){
+                    if (!images.Contains(lastOne))
                     {
-                       Debug.WriteLine("Usunięto plik: " + fileName);
-                       System.IO.File.Delete(fileName);
+                        if ((System.IO.File.Exists(fileName)))
+                        {
+                            Debug.WriteLine("Usunięto plik: " + fileName);
+                            System.IO.File.Delete(fileName);
+                        }
                     }
                 }
+              
 
             }
         }

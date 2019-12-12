@@ -17,7 +17,7 @@
            
         }
         .RadioButtonList{
-            text-align:center;
+            text-align:left;
         }
         .auto-style2 {
             height: 23px;
@@ -28,7 +28,7 @@
         }
         .radio{
             position:relative;
-            text-align:center;
+            text-align:left;
         }
               
         }
@@ -46,6 +46,7 @@
         .aspLabel{
             color:white;
             margin:20px;
+            align-items:left;
         }
         
         .menuTab{
@@ -116,6 +117,10 @@
                 img{
                      width:50px;
                     height:50px;
+                }
+                .radioItem{
+                    position:absolute;
+                    left:0;
                 }
 
     </style>
@@ -238,11 +243,11 @@
             <tr>
                 <td>&nbsp;</td>
                 <td class="radio">
-                    <asp:RadioButtonList ID="rbDostawa" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbDostawa_SelectedIndexChanged" BackColor="Black" CssClass="aspLabel">
-                        <asp:ListItem Value="20">Kurier (płatność z góry)<div class="ceny">20zł</div></asp:ListItem>
-                        <asp:ListItem Value="25">Kurier (płatność pobraniowa)<div class="ceny">25zł</div></asp:ListItem>
-                        <asp:ListItem Value="13">Poczta Polska<div class="ceny">13zł</div></asp:ListItem>
-                        <asp:ListItem Value="10">Paczkomaty InPost <div class="ceny">10zł</div></asp:ListItem>
+                    <asp:RadioButtonList ID="rbDostawa" runat="server" AutoPostBack="True" OnSelectedIndexChanged="rbDostawa_SelectedIndexChanged" BackColor="Black" CssClass="aspLabel" ValidateRequestMode="Enabled">
+                        <asp:ListItem  Value="20">Kurier (płatność z góry)<div class="ceny">20zł</div></asp:ListItem>
+                        <asp:ListItem  Value="25">Kurier (płatność pobraniowa)<div class="ceny">25zł</div></asp:ListItem>
+                        <asp:ListItem  Value="13">Poczta Polska<div class="ceny">13zł</div></asp:ListItem>
+                        <asp:ListItem   Value="10">Paczkomaty InPost <div class="ceny">10zł</div></asp:ListItem>
                     </asp:RadioButtonList>
                 </td>
                 <td>
@@ -261,9 +266,9 @@
                 <td class="radio">
                     <asp:RadioButtonList ID="rbPlatnosc" runat="server" AutoPostBack="True" BackColor="Black" CssClass="aspLabel" OnSelectedIndexChanged="rbPlatnosc_SelectedIndexChanged">
                         <asp:ListItem Value="SPrzelew">Szybki Przelew</asp:ListItem>
-                        <asp:ListItem Value="PTradycyjny">Przelew Tradycyjny</asp:ListItem>
-                        <asp:ListItem Value="PBLIK">Przelew BLIK</asp:ListItem>
-                        <asp:ListItem Value="POdbior">Płatność przy odbiorze</asp:ListItem>
+                        <asp:ListItem  Value="PTradycyjny">Przelew Tradycyjny</asp:ListItem>
+                        <asp:ListItem  Value="PBLIK">Przelew BLIK</asp:ListItem>
+                        <asp:ListItem  Value="POdbior">Płatność przy odbiorze</asp:ListItem>
                     </asp:RadioButtonList>
                 </td>
                 <td>

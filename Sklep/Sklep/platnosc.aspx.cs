@@ -192,6 +192,11 @@ namespace Sklep
                     client.Send(message);
                     lInfo.Text = "Zamównienie zostało złożone. Wysłano wiadomość adres email.";
 
+                    command.CommandText = "UPDATE `users` SET `koszyk` = '{data:[]}' WHERE `users`.`id` = " + User;
+                    command.ExecuteNonQuery();
+
+                    Response.Redirect("Panel_Klienta.aspx");
+
                 }
                 catch (Exception ex)
                 {

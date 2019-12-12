@@ -220,7 +220,7 @@
                          Usuń
                      </asp:TableCell>
                       <asp:TableCell cssClass="aspLabel" Font-Bold="True">
-                         Zbanowany
+                         Konto aktywne
                      </asp:TableCell>
 
                  </asp:TableRow>
